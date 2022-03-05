@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "317473665894",
+    "project_id": "true-aviation-task",
+    "storage_bucket": "true-aviation-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317473665894:android:1d5b25e3063e81e642cea7",
+        "android_client_info": {
+          "package_name": "com.example.true_aviation_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317473665894-533pj3milmu79ud465rn7cfdo6lkke85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz2f8tExC1Cn8850Yhvn_yDGp4QbMnDko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317473665894-533pj3milmu79ud465rn7cfdo6lkke85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
