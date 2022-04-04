@@ -70,12 +70,13 @@ class _lobbyPage extends State<LobbyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(
-                        (MediaQuery.of(context).size.width * 0.45) -
-                            (buttonWidth / 2),
-                        (MediaQuery.of(context).size.height * 0.15),
-                        20.0,
-                        0.0),
+                    // padding: EdgeInsets.fromLTRB(
+                    //     (MediaQuery.of(context).size.width * 0.45) -
+                    //         (buttonWidth / 2),
+                    //     (MediaQuery.of(context).size.height * 0.15),
+                    //     20.0,
+                    //     0.0),
+                    padding: EdgeInsets.only(top: 120),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed('/assignTask');
@@ -103,12 +104,48 @@ class _lobbyPage extends State<LobbyPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(
-                        (MediaQuery.of(context).size.width * 0.45) -
-                            (buttonWidth / 2),
-                        40.0,
-                        20.0,
-                        0.0),
+                    // padding: EdgeInsets.fromLTRB(
+                    //     (MediaQuery.of(context).size.width * 0.45) -
+                    //         (buttonWidth / 2),
+                    //     (MediaQuery.of(context).size.height * 0.15),
+                    //     20.0,
+                    //     0.0),
+                    padding: EdgeInsets.only(top: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/justSubTaskPage');
+                      },
+                      child: Container(
+                        height: buttonHeight,
+                        width: buttonWidth,
+                        child: Material(
+                          borderRadius: BorderRadius.circular(35.0),
+                          shadowColor: Colors.amberAccent,
+                          color: Colors.amberAccent[700],
+                          elevation: 7.0,
+                          child: Center(
+                            child: Text(
+                              'Assign Sub-Tasks',
+                              style: GoogleFonts.mcLaren(
+                                fontSize: textSize,
+                                color: Colors.amber[50],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.only(top: 40),
+                    //padding: EdgeInsets.fromLTRB(
+                    // (MediaQuery.of(context).size.width * 0.45) -
+                    //     (buttonWidth / 2),
+                    // 40.0,
+                    // 20.0,
+                    // 0.0),
                     child: Stack(
                       children: <Widget>[
                         GestureDetector(
@@ -209,14 +246,15 @@ class _lobbyPage extends State<LobbyPage> {
                   //     ],
                   //   ),
                   // ),
-                  
+
                   Container(
-                    padding: EdgeInsets.fromLTRB(
-                        (MediaQuery.of(context).size.width * 0.45) -
-                            (buttonWidth * 0.5),
-                        40.0,
-                        20.0,
-                        0.0),
+                    padding: EdgeInsets.only(top: 40),
+                    // padding: EdgeInsets.fromLTRB(
+                    //     (MediaQuery.of(context).size.width * 0.45) -
+                    //         (buttonWidth * 0.5),
+                    //     40.0,
+                    //     20.0,
+                    //     0.0),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed('/createNewUser');
@@ -244,12 +282,13 @@ class _lobbyPage extends State<LobbyPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(
-                        (MediaQuery.of(context).size.width * 0.45) -
-                            (buttonWidth * 0.5),
-                        20.0,
-                        20.0,
-                        0.0),
+                    // padding: EdgeInsets.fromLTRB(
+                    //     (MediaQuery.of(context).size.width * 0.45) -
+                    //         (buttonWidth * 0.5),
+                    //     20.0,
+                    //     20.0,
+                    //     0.0),
+                    padding: EdgeInsets.only(top: 20),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed('/changePassword');

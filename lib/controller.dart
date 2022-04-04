@@ -15,16 +15,16 @@ class LogInResponse {
 }
 
 class LogInRequest {
-  String employID;
+  String email;
   String password;
 
   LogInRequest({
-    required this.employID,
+    required this.email,
     required this.password,
   });
   Map<String, dynamic> ToJson() {
     Map<String, dynamic> map = {
-      'username': employID.trim(),
+      'username': email.trim(),
       'password': password.trim(),
     };
 

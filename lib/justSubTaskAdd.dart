@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -87,25 +88,25 @@ class CustomPicker extends CommonPickerModel {
   }
 }
 
-class SubTasksPage extends StatefulWidget {
-  const SubTasksPage({Key? key}) : super(key: key);
+class JustSubTasksPage extends StatefulWidget {
+  const JustSubTasksPage({Key? key}) : super(key: key);
 
   @override
-  _SubTasksPageState createState() => _SubTasksPageState();
+  _JustSubTasksPageState createState() => _JustSubTasksPageState();
 }
 
-class _SubTasksPageState extends State<SubTasksPage> {
+class _JustSubTasksPageState extends State<JustSubTasksPage> {
   @override
   initState() {
     super.initState();
-    //getProduct();
+    getData();
   }
 
   final _subTaskController = TextEditingController();
 
   var count = 0;
-  late var produtcListJSON;
-  late var productListNumber;
+  late var taskJSON;
+  late var response;
 
   String subTask = '';
   String _taskTimeController = '';
@@ -114,31 +115,85 @@ class _SubTasksPageState extends State<SubTasksPage> {
   var icnSize = 18.0;
   var dropColor = Colors.blue;
   List<String> subTaskList = [''];
+  List<String> taskTitleList = [''];
 
   late Todo2 detailsModel;
 
   bool _quantityValidate = false;
   bool _subTaskValidate = false;
+  bool _taskValidate = false;
   var taskTime = '';
   bool isLoad = true;
-  String taskID = '';
+  //String _task = '';
+
+  final _task = TextEditingController();
+  String id = '';
 
   void clearController() {
     _subTaskController.clear();
     _taskTimeController = '';
   }
 
+  getData() async {
+    // setState(() {
+    //   isLoading = true;
+    //   print("isLoading");
+    //   //print(json.decode(response.body)['totalLead']);
+    //   //result = json.decode(response.body);
+    //   //print("lead=" + json.decode(response.body)['totalLead']);
+    //   // result['leadInfo'];
+    // });
+    subTaskList = [''];
+    taskTitleList = [''];
+
+    print('Inside Get Data');
+    response = await http.get(
+      Uri.parse('https://10.100.17.47/FairEx/api/v1/meet/task'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization':
+            'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvMTAuMTAwLjE3LjQ3XC9GYWlyRXhcL2FwaVwvdjFcL2FkbWluXC9sb2dpbiIsImlhdCI6MTY0ODQ2MjY4NywibmJmIjoxNjQ4NDYyNjg3LCJqdGkiOiI0OVk1OEN5dkhrbUxsc25XIiwic3ViIjoyLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.7pmt6Tjglssmuf_qMMggA8NvLG4x1rTU0GfyjcXVp0w',
+      },
+    );
+    taskJSON = jsonDecode(response.body);
+    print(taskJSON[0].toString());
+
+    int taskNumber = taskJSON.length;
+
+    for (int i = 0; i < taskNumber; i++) {
+      String middle = taskJSON[i]['id'].toString() +
+          '-' +
+          taskJSON[i]['title'].toString() +
+          '( ' +
+          taskJSON[i]['time'].toString() +
+          ' )';
+
+      taskTitleList.add(middle);
+    }
+    print(taskTitleList);
+
+    // room1 = jsonDecode(response.body)['room1'];
+    // room2 = jsonDecode(response.body)['room2'];
+    // room3 = jsonDecode(response.body)['room3'];
+    //print(statusValue[0]['customerName'].toString());
+  }
+
   formValidator() {
     String subTaskValidation = _subTaskController.text;
-
+    String taskValidation = _task.text;
     setState(() {
       if (subTaskValidation == null || subTaskValidation.isEmpty) {
         _subTaskValidate = true;
       } else {
         _subTaskValidate = false;
       }
+      if (taskValidation == null || taskValidation.isEmpty) {
+        _taskValidate = true;
+      } else {
+        _taskValidate = false;
+      }
     });
-    if (!_subTaskValidate) {
+    if (!_subTaskValidate && !_taskValidate) {
       return true;
     } else {
       return false;
@@ -204,6 +259,7 @@ class _SubTasksPageState extends State<SubTasksPage> {
 
   Future<String> createAlbum() async {
     print('inhttp');
+    print('object' + id);
     var response = await http.post(
         Uri.parse('https://10.100.17.47/FairEx/api/v1/meet/sub-task'),
         headers: <String, String>{
@@ -213,7 +269,7 @@ class _SubTasksPageState extends State<SubTasksPage> {
         },
         body: jsonEncode(<String, String>{
           //'new_lead_transaction': jsonEncode(<String, String>{
-          'task_id': taskID,
+          'task_id': id,
           'title': subTask,
           'time': taskTime,
           //'newPassword': newPassword
@@ -232,8 +288,6 @@ class _SubTasksPageState extends State<SubTasksPage> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as String;
-    taskID = arguments;
     setState(() {
       //count = arguments;
     });
@@ -262,6 +316,120 @@ class _SubTasksPageState extends State<SubTasksPage> {
               SizedBox(
                 height: 50.0,
               ),
+              Padding(
+                  padding:
+                      const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
+                  child:
+                      // Container(
+                      //   padding: EdgeInsets.only(left: 5.0),
+                      //   decoration: BoxDecoration(
+                      //       border: Border.all(
+                      //         color: Colors.lightGreenAccent,
+                      //         width: 3.0,
+                      //       ),
+                      //       borderRadius: BorderRadius.circular(10)),
+                      //   child: DropdownButtonHideUnderline(
+                      //     child: DropdownButton2(
+                      //       hint: Text(
+                      //         'Task ID & Title* : ',
+                      //         style: GoogleFonts.mcLaren(
+                      //             color: Colors.lightGreen[100],
+                      //             fontWeight: FontWeight.bold),
+                      //       ),
+                      //       items: taskTitleList
+                      //           .map((item) => DropdownMenuItem<String>(
+                      //                 value: item,
+                      //                 child: Text(
+                      //                   'Task ID & Title : ' + item,
+                      //                   style: GoogleFonts.mcLaren(
+                      //                       color: Colors.lightGreen[100],
+                      //                       fontWeight: FontWeight.bold),
+                      //                 ),
+                      //               ))
+                      //           .toList(),
+                      //       value: _task,
+                      //       onChanged: (value) {
+                      //         setState(() {
+                      //           _task = value as String;
+                      //         });
+                      //       },
+                      //       buttonHeight: 50,
+                      //       buttonWidth: MediaQuery.of(context).size.width - 20,
+                      //       itemHeight: 50,
+                      //       dropdownDecoration: BoxDecoration(
+                      //         borderRadius: BorderRadius.circular(20),
+                      //         color: Colors.lightGreen,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+
+                      Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.lightGreenAccent,
+                          width: 3.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TypeAheadFormField(
+                      suggestionsCallback: (pattern) => taskTitleList.where(
+                        (item) => item.toLowerCase().contains(
+                              pattern.toLowerCase(),
+                            ),
+                      ),
+                      itemBuilder: (_, String item) => ListTile(
+                        title: Text(
+                          item,
+                          style: GoogleFonts.mcLaren(
+                              fontSize: 17,
+                              color: Colors.lightGreen[900],
+                              fontWeight: FontWeight.normal),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ),
+                      onSuggestionSelected: (String val) {
+                        this._task.text = val;
+                        setState(() {
+                          //  / id = _task.toString().split('-')[0];
+                        });
+                      },
+                      getImmediateSuggestions: true,
+                      hideSuggestionsOnKeyboardHide: false,
+                      hideOnEmpty: false,
+                      noItemsFoundBuilder: (context) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'No Suggestion',
+                          style: GoogleFonts.mcLaren(
+                              fontSize: 17,
+                              color: Colors.lightGreen[100],
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      textFieldConfiguration: TextFieldConfiguration(
+                        style:
+                            GoogleFonts.mcLaren(color: Colors.lightGreen[100]),
+                        decoration: InputDecoration(
+                          fillColor: Colors.white12,
+                          errorText:
+                              _taskValidate ? 'Value Can\'t Be Empty' : null,
+                          hintText: 'Type',
+                          hintStyle: GoogleFonts.mcLaren(
+                              fontSize: 15,
+                              color: Colors.lightGreen[100],
+                              fontWeight: FontWeight.normal),
+                          labelText: 'Task ID & Title*',
+                          labelStyle: GoogleFonts.mcLaren(
+                              fontSize: 17,
+                              color: Colors.lightGreen[100],
+                              fontWeight: FontWeight.bold),
+                        ),
+                        controller: this._task,
+                      ),
+                    ),
+                  )),
               Padding(
                 padding:
                     const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
@@ -329,7 +497,7 @@ class _SubTasksPageState extends State<SubTasksPage> {
                       }, currentTime: DateTime.now());
                     },
                     child: Text(
-                      "Task Time* : $_taskTimeController",
+                      "Sub Task Time* : $_taskTimeController",
                       style: GoogleFonts.mcLaren(
                           fontSize: 17,
                           color: Colors.lightGreen[100],
@@ -353,6 +521,8 @@ class _SubTasksPageState extends State<SubTasksPage> {
                         count += 1;
                         subTask = _subTaskController.text;
                         taskTime = _taskTimeController.toString();
+                        id = _task.text.toString().split('-')[0];
+                        print('print from pressing ' + id);
                         print(subTask + ' => ' + taskTime);
 
                         saveSubTaskData();
@@ -383,8 +553,19 @@ class _SubTasksPageState extends State<SubTasksPage> {
                     padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
                     child: GestureDetector(
                       onTap: () {
-                        saveSubTaskData();
-                        Navigator.of(context).pushNamed('/lobby');
+                        if (_subTaskController.text == '') {
+                          Navigator.of(context).pushNamed('/lobby');
+                        } else {
+                          count += 1;
+                          subTask = _subTaskController.text;
+                          taskTime = _taskTimeController.toString();
+                          id = _task.text.toString().split('-')[0];
+
+                          print(subTask + ' => ' + taskTime);
+
+                          saveSubTaskData();
+                          Navigator.of(context).pushNamed('/lobby');
+                        }
                       },
                       child: Container(
                         height: 30.0,
