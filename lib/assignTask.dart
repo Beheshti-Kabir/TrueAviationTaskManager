@@ -229,7 +229,7 @@ class _assignTask extends State<AssignTask> {
     print('task =>' + taskTitle);
     print('taskdate =>' + taskDate);
     var response = await http.post(
-        Uri.parse('https://10.100.17.47/FairEx/api/v1/meet/task'),
+        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization':
@@ -237,7 +237,8 @@ class _assignTask extends State<AssignTask> {
         },
         body: jsonEncode(<String, String>{
           'title': taskTitle,
-          'time': taskDate
+          'time': taskDate,
+          'status': 'Not Touched'
           //'newPassword': newPassword
         }
             // ),}

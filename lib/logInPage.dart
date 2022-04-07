@@ -1,3 +1,5 @@
+import 'dart:convert';
+//import 'dart:html';
 import 'dart:io';
 
 import 'package:true_aviation_task/assignTask.dart';
@@ -6,7 +8,7 @@ import 'package:true_aviation_task/checkAvalability.dart';
 import 'package:true_aviation_task/constants.dart';
 import 'package:true_aviation_task/createNewUser.dart';
 import 'package:true_aviation_task/justSubTaskAdd.dart';
-import 'package:true_aviation_task/lobby.dart';
+import 'package:true_aviation_task/adminLobby.dart';
 import 'package:true_aviation_task/calender.dart';
 import 'package:true_aviation_task/subTaskDetails.dart';
 import 'package:true_aviation_task/todaysTasks.dart';
@@ -17,8 +19,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:flutter/material.dart';
 import 'package:true_aviation_task/utils/session_maneger.dart';
-import 'api_service.dart';
-import 'controller.dart';
 
 class LogInPage extends StatefulWidget {
   @override
@@ -30,11 +30,22 @@ class _LogINPageState extends State<LogInPage> {
   final _passwordController = TextEditingController();
   bool _emailValidate = false;
   bool _passwordValidate = false;
+  String filterType = "user";
+  String URL = 'https://10.100.17.234/FairEx/api/v1/user/login';
+  String email = '';
+  String password = '';
+  String token = '';
+  String userName = '';
+  String phoneNumber = '';
+  String userType = 'user';
+  String route = '/userLobby';
+  String message = '';
   //logInValidator(){}
 
   bool formValidator() {
     String email = _emailController.text;
     String password = _passwordController.text;
+
     setState(() {
       if (email == null || email.isEmpty) {
         _emailValidate = true;
@@ -52,6 +63,64 @@ class _LogINPageState extends State<LogInPage> {
     } else {
       return false;
     }
+  }
+
+  changeFilter(String filter) {
+    filterType = filter;
+    setState(() {});
+  }
+
+  setData() async {
+    print('in store data');
+
+    // Constants.employeeId = _emailController.text.trim();
+    storeLocalSetUserName(Constants.userNameKey, userName);
+    storeLocalSetUserNumber(Constants.userPhoneKey, phoneNumber);
+    storeLocalSetAccessToken(Constants.accessTokenKey, token);
+    storeLocalSetUserType(Constants.userTypeKey, userType);
+
+    storeLocalSetLogInStatus(Constants.logInStatusKey, 'true');
+    print('$userName $phoneNumber  $userType $token');
+    message = 'Logging In';
+    Navigator.of(context).pushNamed(route);
+  }
+
+  Future<String> createAlbum() async {
+    var response = await http.post(Uri.parse(URL),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: jsonEncode(<String, String>{
+          //'new_lead_transaction': jsonEncode(<String, String>{
+          'email': email,
+          'password': password,
+        }
+            // ),}
+
+            ));
+
+    print(json.decode(response.body).toString());
+    var responsee = json.decode(response.body)['status'];
+    token = json.decode(response.body)['token_type'].toString() +
+        ' ' +
+        json.decode(response.body)['access_token'].toString();
+    phoneNumber = json.decode(response.body)['user']['phone'].toString();
+    userName = json.decode(response.body)['user']['name'].toString();
+
+    print(responsee);
+    if (response.statusCode == 200) {
+      if (responsee.toString().toLowerCase().trim() == 'true') {
+        print('all in ');
+        setData();
+        message = 'Logging In';
+      } else {
+        message = 'EmployID & Password Don\'t Match';
+      }
+    } else {
+      message = 'Server issues';
+    }
+    return 'nothing';
   }
 
   @override
@@ -123,8 +192,96 @@ class _LogINPageState extends State<LogInPage> {
             SizedBox(
               height: 105,
             ),
+            Container(
+              height: 70,
+              //color: Colors.cyan,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          URL =
+                              'https://10.100.17.234/FairEx/api/v1/user/login';
+                          route = '/userLobby';
+                          userType = 'user';
+                          changeFilter("user");
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: (filterType == "user")
+                                    ? Colors.green
+                                    : Colors.transparent,
+                                width: 3.0,
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          // color: (filterType == "user")
+                          //     ? Colors.greenAccent
+                          //     : Colors.white,
+                          child: Text(
+                            "I am Employee",
+                            style: GoogleFonts.mcLaren(
+                                color: (filterType == "user")
+                                    ? Colors.white
+                                    : Colors.greenAccent,
+                                fontSize: 18),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          URL =
+                              'https://10.100.17.234/FairEx/api/v1/admin/login';
+                          route = '/lobby';
+                          userType = 'admin';
+                          changeFilter("admin");
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: (filterType == "admin")
+                                    ? Colors.green
+                                    : Colors.transparent,
+                                width: 3.0,
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          // color: (filterType == "user")
+                          //     ? Colors.greenAccent
+                          //     : Colors.white,
+                          child: Text(
+                            "I an Admin",
+                            style: GoogleFonts.mcLaren(
+                                color: (filterType == "admin")
+                                    ? Colors.white
+                                    : Colors.greenAccent,
+                                fontSize: 18),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 20),
               child: Container(
                   padding: EdgeInsets.only(left: 5.0),
                   decoration: BoxDecoration(
@@ -191,33 +348,24 @@ class _LogINPageState extends State<LogInPage> {
                         backgroundColor: Colors.red,
                         textColor: Colors.green[100],
                         fontSize: 16.0);
-                    Navigator.of(context).pushNamed('/lobby');
+                    //Navigator.of(context).pushNamed('/lobby');
                     bool isValid = formValidator();
                     print(_emailController.text);
                     print(_passwordController.text);
                     if (isValid) {
-                      var model = LogInRequest(
-                          password: _passwordController.text,
-                          email: _emailController.text);
-                      var response = await ApiService.login(model);
-                      print(response.accessToken);
-                      if (response.result.toLowerCase().trim() == 'success') {
-                        Constants.employeeId = _emailController.text.trim();
-                        storeLocalSetEmployeeID(
-                            Constants.employeeIDKey, Constants.employeeId);
-                        storeLocalSetLogInStatus(
-                            Constants.logInStatusKey, response.result);
-                        Navigator.of(context).pushNamed('/lobby');
-                      }
-                    } else {
-                      Fluttertoast.showToast(
-                          msg: "Wrong UserID or Password",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.TOP,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.green[100],
-                          fontSize: 16.0);
+                      email = _emailController.text;
+                      password = _passwordController.text;
+                      var fau = createAlbum();
+                      // if (result == 'true') {
+                      // Fluttertoast.showToast(
+                      //     msg: message,
+                      //     toastLength: Toast.LENGTH_SHORT,
+                      //     gravity: ToastGravity.TOP,
+                      //     timeInSecForIosWeb: 1,
+                      //     backgroundColor: Colors.red,
+                      //     textColor: Colors.green[100],
+                      //     fontSize: 16.0);
+                      // }
                     }
                   },
                   child: Container(

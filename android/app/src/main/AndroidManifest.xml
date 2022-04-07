@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.true_aviation_task">
    <application
-        android:label="true_aviation_task"
+        android:label="True Aviation Task Manager"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

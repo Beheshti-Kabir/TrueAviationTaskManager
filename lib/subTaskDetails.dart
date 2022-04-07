@@ -205,7 +205,7 @@ class _SubTasksPageState extends State<SubTasksPage> {
   Future<String> createAlbum() async {
     print('inhttp');
     var response = await http.post(
-        Uri.parse('https://10.100.17.47/FairEx/api/v1/meet/sub-task'),
+        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/sub-task'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization':
@@ -216,6 +216,7 @@ class _SubTasksPageState extends State<SubTasksPage> {
           'task_id': taskID,
           'title': subTask,
           'time': taskTime,
+          'status': '0'
           //'newPassword': newPassword
         }
             // ),}

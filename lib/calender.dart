@@ -7,12 +7,13 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:true_aviation_task/lobby.dart';
+import 'package:true_aviation_task/adminLobby.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:true_aviation_task/utils/session_maneger.dart';
 
 class CalenderPage extends StatefulWidget {
   @override
@@ -68,7 +69,7 @@ class _calender extends State<CalenderPage> {
     } else {
       boolState = '1';
     }
-    String URL = 'https://10.100.17.47/FairEx/api/v1/meet/sub-task/status/' +
+    String URL = 'https://10.100.17.234/FairEx/api/v1/meet/sub-task/status/' +
         sub_task_id;
     response = await http.post(Uri.parse(URL),
         headers: <String, String>{
@@ -101,10 +102,14 @@ class _calender extends State<CalenderPage> {
     //   //print("lead=" + json.decode(response.body)['totalLead']);
     //   // result['leadInfo'];
     // });
+    bool logINStatus = await getLocalLoginStatus();
+    print('status=' + logINStatus.toString());
+    String userType = await getLocalUserTpe();
+    print('type=> ' + userType);
     isLoading = false;
     print('desired:' + dateFind);
     response = await http.post(
-        Uri.parse('https://10.100.17.47/FairEx/api/v1/meet/task/date'),
+        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task/date'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -130,8 +135,9 @@ class _calender extends State<CalenderPage> {
     if (taskNumber > 0) {
       for (int i = 0; i < taskNumber; i++) {
         taskTitle.add(taskJSON[i]['title']);
-        taskID.add(taskJSON[0]['id'].toString());
-        taskStatus.add(taskJSON[0]['status']);
+        taskID.add(taskJSON[i]['id'].toString());
+        taskStatus.add(taskJSON[i]['status']);
+        print(taskStatus);
         int subTaskCount = taskJSON[i]['subtask'].length;
         taskWiseSubtaskTitle = [];
         taskWiseSubtaskTime = [];
@@ -279,7 +285,11 @@ class _calender extends State<CalenderPage> {
                                             MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            'Task Title : ' + taskTitle[index],
+                                            'Task Title : ' +
+                                                taskTitle[index] +
+                                                ' [ ' +
+                                                taskStatus[index] +
+                                                ' ] ',
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.mcLaren(
                                                 color: Colors.pink,
@@ -289,54 +299,55 @@ class _calender extends State<CalenderPage> {
                                         ],
                                       ),
                                       (subTaskTimeList[index].length > 0)
-                                          ? Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Text('Sub Task Title',
-                                                          style: GoogleFonts
-                                                              .mcLaren(
-                                                                  color: Colors
-                                                                      .pinkAccent,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-                                                    ],
+                                          ? Container(
+                                              padding:
+                                                  EdgeInsets.only(bottom: 5),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Column(
+                                                      children: <Widget>[
+                                                        Text('Sub Task Title',
+                                                            style: GoogleFonts.mcLaren(
+                                                                color: Colors
+                                                                    .pinkAccent,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Text('Sub Task Time',
-                                                          style: GoogleFonts
-                                                              .mcLaren(
-                                                                  color: Colors
-                                                                      .pinkAccent,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-                                                    ],
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Column(
+                                                      children: <Widget>[
+                                                        Text('Sub Task Time',
+                                                            style: GoogleFonts.mcLaren(
+                                                                color: Colors
+                                                                    .pinkAccent,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Text('Sub Task Status',
-                                                          style: GoogleFonts
-                                                              .mcLaren(
-                                                                  color: Colors
-                                                                      .pinkAccent,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-                                                    ],
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Column(
+                                                      children: <Widget>[
+                                                        Text('Sub Task Status',
+                                                            style: GoogleFonts.mcLaren(
+                                                                color: Colors
+                                                                    .pinkAccent,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             )
                                           : Container(),
                                       ListView.builder(
@@ -346,118 +357,115 @@ class _calender extends State<CalenderPage> {
                                         shrinkWrap: true,
                                         itemBuilder:
                                             (BuildContext context, int index2) {
-                                          return Row(
-                                            children: <Widget>[
-                                              Expanded(
-                                                flex: 2,
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    Text(
-                                                      subTaskTitleList[index]
-                                                          [index2],
-                                                      style:
-                                                          GoogleFonts.mcLaren(
-                                                              color: Colors
-                                                                  .pinkAccent),
-                                                    )
-                                                  ],
+                                          return Container(
+                                            padding: EdgeInsets.only(bottom: 2),
+                                            child: Row(
+                                              children: <Widget>[
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      Text(
+                                                        subTaskTitleList[index]
+                                                            [index2],
+                                                        style:
+                                                            GoogleFonts.mcLaren(
+                                                                color: Colors
+                                                                    .pinkAccent),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    Text(
-                                                      subTaskTimeList[index]
-                                                          [index2],
-                                                      style:
-                                                          GoogleFonts.mcLaren(
-                                                              color: Colors
-                                                                  .pinkAccent),
-                                                    )
-                                                  ],
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      Text(
+                                                        subTaskTimeList[index]
+                                                            [index2],
+                                                        style:
+                                                            GoogleFonts.mcLaren(
+                                                                color: Colors
+                                                                    .pinkAccent),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                          print('tapped');
-                                                          showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) =>
-                                                                      AlertDialog(
-                                                                        elevation:
-                                                                            20.0,
-                                                                        // backgroundColor:
-                                                                        //     Colors.,
-                                                                        // shape:
-                                                                        //     CircleAvatar
-                                                                        title: Text(
-                                                                            'Task Title: ' +
-                                                                                taskTitle[index].toString(),
-                                                                            style: GoogleFonts.mcLaren(color: Colors.pinkAccent, fontWeight: FontWeight.bold)),
-                                                                        content: Text(
-                                                                            'Sub Task: ' +
-                                                                                subTaskTitleList[index][index2].toString() +
-                                                                                '\nThis Sub Task is ' +
-                                                                                subTaskStatusList[index][index2].toString() +
-                                                                                '\nDo you wanna change the status?',
-                                                                            style: GoogleFonts.mcLaren(color: Colors.pinkAccent)),
-                                                                        actions: <
-                                                                            Widget>[
-                                                                          TextButton(
-                                                                            onPressed: () =>
-                                                                                Navigator.pop(context),
-                                                                            child:
-                                                                                Text('No', style: GoogleFonts.mcLaren(color: Colors.pink, fontWeight: FontWeight.bold)),
-                                                                          ),
-                                                                          TextButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              changeStatus(subTaskStatusList[index][index2], subTaskID[index][index2]);
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      GestureDetector(
+                                                          onTap: () {
+                                                            print('tapped');
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        AlertDialog(
+                                                                          elevation:
+                                                                              20.0,
+                                                                          // backgroundColor:
+                                                                          //     Colors.,
+                                                                          // shape:
+                                                                          //     CircleAvatar
+                                                                          title: Text(
+                                                                              'Task Title: ' + taskTitle[index].toString(),
+                                                                              style: GoogleFonts.mcLaren(color: Colors.pinkAccent, fontWeight: FontWeight.bold)),
+                                                                          content: Text(
+                                                                              'Sub Task: ' + subTaskTitleList[index][index2].toString() + '\nThis Sub Task is ' + subTaskStatusList[index][index2].toString() + '\nDo you wanna change the status?',
+                                                                              style: GoogleFonts.mcLaren(color: Colors.pinkAccent)),
+                                                                          actions: <
+                                                                              Widget>[
+                                                                            TextButton(
+                                                                              onPressed: () => Navigator.pop(context),
+                                                                              child: Text('No', style: GoogleFonts.mcLaren(color: Colors.pink, fontWeight: FontWeight.bold)),
+                                                                            ),
+                                                                            TextButton(
+                                                                              onPressed: () {
+                                                                                changeStatus(subTaskStatusList[index][index2], subTaskID[index][index2]);
 
-                                                                              Navigator.pop(context);
-                                                                            },
-                                                                            child:
-                                                                                Text('Yes', style: GoogleFonts.mcLaren(color: Colors.pink, fontWeight: FontWeight.bold)),
-                                                                          )
-                                                                        ],
-                                                                      ));
-                                                        },
-                                                        child: Container(
-                                                          padding:
-                                                              EdgeInsets.all(5),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  border: Border
-                                                                      .all(
-                                                                    color: Colors
-                                                                        .pinkAccent,
-                                                                    width: 1.0,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5)),
-                                                          child: Text(
-                                                            subTaskStatusList[
-                                                                        index]
-                                                                    [index2]
-                                                                .toString(),
-                                                            style: GoogleFonts
-                                                                .mcLaren(
-                                                                    color: Colors
-                                                                        .pinkAccent),
-                                                          ),
-                                                        ))
-                                                  ],
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: Text('Yes', style: GoogleFonts.mcLaren(color: Colors.pink, fontWeight: FontWeight.bold)),
+                                                                            )
+                                                                          ],
+                                                                        ));
+                                                          },
+                                                          child: Container(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    5),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    border:
+                                                                        Border
+                                                                            .all(
+                                                                      color: Colors
+                                                                          .pinkAccent,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5)),
+                                                            child: Text(
+                                                              subTaskStatusList[
+                                                                          index]
+                                                                      [index2]
+                                                                  .toString(),
+                                                              style: GoogleFonts
+                                                                  .mcLaren(
+                                                                      color: Colors
+                                                                          .pinkAccent),
+                                                            ),
+                                                          ))
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           );
                                         },
                                       )

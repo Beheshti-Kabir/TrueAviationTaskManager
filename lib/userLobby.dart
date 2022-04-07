@@ -8,10 +8,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:true_aviation_task/constants.dart';
+import 'package:true_aviation_task/logInPage.dart';
+import 'package:true_aviation_task/utils/session_maneger.dart';
 
-class LobbyPage extends StatefulWidget {
+class UserLobbyPage extends StatefulWidget {
   @override
-  _lobbyPage createState() => _lobbyPage();
+  _userLobbyPage createState() => _userLobbyPage();
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +26,7 @@ class LobbyPage extends StatefulWidget {
   void setState(Null Function() param0) {}
 }
 
-class _lobbyPage extends State<LobbyPage> {
+class _userLobbyPage extends State<UserLobbyPage> {
   @override
   double buttonWidth = 300;
   double buttonHeight = 50;
@@ -70,76 +73,7 @@ class _lobbyPage extends State<LobbyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    // padding: EdgeInsets.fromLTRB(
-                    //     (MediaQuery.of(context).size.width * 0.45) -
-                    //         (buttonWidth / 2),
-                    //     (MediaQuery.of(context).size.height * 0.15),
-                    //     20.0,
-                    //     0.0),
                     padding: EdgeInsets.only(top: 120),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/assignTask');
-                      },
-                      child: Container(
-                        height: buttonHeight,
-                        width: buttonWidth,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(35.0),
-                          shadowColor: Colors.amberAccent,
-                          color: Colors.amberAccent[700],
-                          elevation: 7.0,
-                          child: Center(
-                            child: Text(
-                              'Assign A Task',
-                              style: GoogleFonts.mcLaren(
-                                fontSize: textSize,
-                                color: Colors.amber[50],
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    // padding: EdgeInsets.fromLTRB(
-                    //     (MediaQuery.of(context).size.width * 0.45) -
-                    //         (buttonWidth / 2),
-                    //     (MediaQuery.of(context).size.height * 0.15),
-                    //     20.0,
-                    //     0.0),
-                    padding: EdgeInsets.only(top: 20),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/justSubTaskPage');
-                      },
-                      child: Container(
-                        height: buttonHeight,
-                        width: buttonWidth,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(35.0),
-                          shadowColor: Colors.amberAccent,
-                          color: Colors.amberAccent[700],
-                          elevation: 7.0,
-                          child: Center(
-                            child: Text(
-                              'Assign Sub-Tasks',
-                              style: GoogleFonts.mcLaren(
-                                fontSize: textSize,
-                                color: Colors.amber[50],
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Container(
-                    padding: EdgeInsets.only(top: 40),
                     //padding: EdgeInsets.fromLTRB(
                     // (MediaQuery.of(context).size.width * 0.45) -
                     //     (buttonWidth / 2),
@@ -248,40 +182,6 @@ class _lobbyPage extends State<LobbyPage> {
                   // ),
 
                   Container(
-                    padding: EdgeInsets.only(top: 40),
-                    // padding: EdgeInsets.fromLTRB(
-                    //     (MediaQuery.of(context).size.width * 0.45) -
-                    //         (buttonWidth * 0.5),
-                    //     40.0,
-                    //     20.0,
-                    //     0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/createNewUser');
-                      },
-                      child: Container(
-                        height: buttonHeight,
-                        width: buttonWidth,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(35.0),
-                          shadowColor: Colors.amberAccent,
-                          color: Colors.amberAccent,
-                          elevation: 7.0,
-                          child: Center(
-                            child: Text(
-                              'Create New User',
-                              style: GoogleFonts.mcLaren(
-                                fontSize: textSize,
-                                color: Colors.amber[50],
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
                     // padding: EdgeInsets.fromLTRB(
                     //     (MediaQuery.of(context).size.width * 0.45) -
                     //         (buttonWidth * 0.5),
@@ -304,6 +204,49 @@ class _lobbyPage extends State<LobbyPage> {
                           child: Center(
                             child: Text(
                               'Change Password',
+                              style: GoogleFonts.mcLaren(
+                                fontSize: textSize,
+                                color: Colors.amber[50],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // padding: EdgeInsets.fromLTRB(
+                    //     (MediaQuery.of(context).size.width * 0.45) -
+                    //         (buttonWidth * 0.5),
+                    //     20.0,
+                    //     20.0,
+                    //     0.0),
+                    padding: EdgeInsets.only(top: 60),
+                    child: GestureDetector(
+                      onTap: () {
+                        storeLocalSetAccessToken(Constants.accessTokenKey, '');
+                        storeLocalSetLogInStatus(
+                            Constants.logInStatusKey, 'false');
+                        storeLocalSetUserName(Constants.userNameKey, '');
+                        storeLocalSetUserNumber(Constants.userPhoneKey, '');
+                        storeLocalSetUserType(Constants.userTypeKey, '');
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => new LogInPage()),
+                            (Route<dynamic> route) => false);
+                      },
+                      child: Container(
+                        height: buttonHeight,
+                        width: buttonWidth,
+                        child: Material(
+                          borderRadius: BorderRadius.circular(35.0),
+                          shadowColor: Colors.amberAccent,
+                          color: Colors.amberAccent,
+                          elevation: 7.0,
+                          child: Center(
+                            child: Text(
+                              'Log Out',
                               style: GoogleFonts.mcLaren(
                                 fontSize: textSize,
                                 color: Colors.amber[50],

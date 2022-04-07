@@ -3,13 +3,12 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:true_aviation_task/lobby.dart';
+import 'package:true_aviation_task/adminLobby.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-
 
 class TodaysTasks extends StatefulWidget {
   @override
@@ -106,224 +105,340 @@ class _todaysTask extends State<TodaysTasks> {
               height: 100.0,
               width: MediaQuery.of(context).size.width,
             ),
-            
 
-            //if (room1.isNotEmpty) 
-             Column(children: <Widget>[
-               Container(
-                 padding: EdgeInsets.only(left: 10.0, top: 30.0),
-                child:  Text (
-                'Current Meeting',
-                style: GoogleFonts.mcLaren( color: Colors.cyan, fontSize: 20.0,fontWeight: FontWeight.bold),
-              ),
-              alignment: Alignment.topLeft,
-            ),
-            SizedBox(height: 10.0,),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.cyanAccent,
-                                      width: 3.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10)),
-                child: Table(
-                  
-                  defaultColumnWidth: FixedColumnWidth((MediaQuery.of(context).size.width)*0.5),
-                  // border: TableBorder.all(color: Colors.white,
-                  //                     style: BorderStyle.solid,
-                  //                     width: 0),
-                  children: [
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        
-                        child: Text('Date',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('20/20/2022',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Start Time',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:10 pm',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('End Time',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:40 pm',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Chaired By',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Chairman Sir',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Booked By',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Shetu Bhai',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Agenda',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Paperless Office',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                  ],
-                ),
-              ),
-            )
-            ],),
-           
-            SizedBox(
-              height: 20.0,
-            ),
-
-            //if (room1.isNotEmpty) 
-            Column(children: <Widget>[
-               Container(
-                 padding: EdgeInsets.only(left: 10.0),
-                child:  Text (
-                'Next Meeting',
-                style: GoogleFonts.mcLaren( color: Colors.cyan, fontSize: 20.0,fontWeight: FontWeight.bold),
-              ),
-              alignment: Alignment.topLeft,
-            ),
-            SizedBox(height: 10.0,),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.cyanAccent,
-                                      width: 3.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10)),
-                                    child: Table(
-                  
-                  defaultColumnWidth: FixedColumnWidth((MediaQuery.of(context).size.width)*0.5),
-                  // border: TableBorder.all(color: Colors.white,
-                  //                     style: BorderStyle.solid,
-                  //                     width: 0),
-                  children: [
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        
-                        child: Text('Date',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('20/20/2022',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Start Time',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:10 pm',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('End Time',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:40 pm',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Chaired By',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Chairman Sir',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Booked By',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Shetu Bhai',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Agenda',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Paperless Office',style: GoogleFonts.mcLaren(color:Colors.cyanAccent,fontSize: 20),),),
-                        
-                      ]
-                    ),
-                  ],
-                ),
-                ),
-            )
-            ],),
-           
-            SizedBox(
-              height: 20.0,
-            ),
-
-            
-            Container(
-              alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      height: 40.0,
-                    width: 150.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.cyan,
+            //if (room1.isNotEmpty)
+            Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 10.0, top: 30.0),
+                  child: Text(
+                    'Current Meeting',
+                    style: GoogleFonts.mcLaren(
                         color: Colors.cyan,
-                        elevation: 7.0,
-                        child: Center(
-                          child: Text(
-                            "Day Long Plan",
-                            style:
-                                GoogleFonts.mcLaren(color: Colors.white,),
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  alignment: Alignment.topLeft,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.cyanAccent,
+                          width: 3.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Table(
+                      defaultColumnWidth: FixedColumnWidth(
+                          (MediaQuery.of(context).size.width) * 0.5),
+                      // border: TableBorder.all(color: Colors.white,
+                      //                     style: BorderStyle.solid,
+                      //                     width: 0),
+                      children: [
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Date',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '20/20/2022',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Start Time',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:10 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'End Time',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:40 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Chaired By',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Chairman Sir',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Booked By',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Shetu Bhai',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Agenda',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Paperless Office',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+
+            SizedBox(
+              height: 20.0,
+            ),
+
+            //if (room1.isNotEmpty)
+            Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Next Meeting',
+                    style: GoogleFonts.mcLaren(
+                        color: Colors.cyan,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  alignment: Alignment.topLeft,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.cyanAccent,
+                          width: 3.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Table(
+                      defaultColumnWidth: FixedColumnWidth(
+                          (MediaQuery.of(context).size.width) * 0.5),
+                      // border: TableBorder.all(color: Colors.white,
+                      //                     style: BorderStyle.solid,
+                      //                     width: 0),
+                      children: [
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Date',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '20/20/2022',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Start Time',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:10 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'End Time',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:40 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Chaired By',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Chairman Sir',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Booked By',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Shetu Bhai',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Agenda',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Paperless Office',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.cyanAccent, fontSize: 20),
+                            ),
+                          ),
+                        ]),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+
+            SizedBox(
+              height: 20.0,
+            ),
+
+            Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    height: 40.0,
+                    width: 150.0,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(20.0),
+                      shadowColor: Colors.cyan,
+                      color: Colors.cyan,
+                      elevation: 7.0,
+                      child: Center(
+                        child: Text(
+                          "Day Long Plan",
+                          style: GoogleFonts.mcLaren(
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ),)),
-                    SizedBox(height: 20.0,),
-
+                    ),
+                  ),
+                )),
+            SizedBox(
+              height: 20.0,
+            ),
           ],
         ),
       )),

@@ -148,7 +148,7 @@ class _JustSubTasksPageState extends State<JustSubTasksPage> {
 
     print('Inside Get Data');
     response = await http.get(
-      Uri.parse('https://10.100.17.47/FairEx/api/v1/meet/task'),
+      Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization':
@@ -261,7 +261,7 @@ class _JustSubTasksPageState extends State<JustSubTasksPage> {
     print('inhttp');
     print('object' + id);
     var response = await http.post(
-        Uri.parse('https://10.100.17.47/FairEx/api/v1/meet/sub-task'),
+        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/sub-task'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization':
@@ -272,6 +272,7 @@ class _JustSubTasksPageState extends State<JustSubTasksPage> {
           'task_id': id,
           'title': subTask,
           'time': taskTime,
+          'status': '0'
           //'newPassword': newPassword
         }
             // ),}

@@ -17,27 +17,29 @@ class CreateNewUserPage extends StatefulWidget {
 
 class _createNewUser extends State<CreateNewUserPage> {
   //@override
-  final _creatorsEmployID = TextEditingController();
-  final _creatorsPassword = TextEditingController();
-  final _newEmployID = TextEditingController();
-  final _newEmployIDPassword = TextEditingController();
-  final _reNewEmployIDPassword = TextEditingController();
 
-  bool _creatorsEmployIDValidate = false;
-  bool _creatorsPasswordValidate = false;
+  final _phoneNumberController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _newEmailIDController = TextEditingController();
+  final _newEmployIDPasswordController = TextEditingController();
+  final _reNewEmployIDPasswordController = TextEditingController();
+
+  bool _phoneNumberValidate = false;
+  bool _nameValidate = false;
   bool _newEmployIDValidate = false;
   bool _newEmployIDPasswordValidate = false;
   bool _reNewEmployIDPasswordValidate = false;
 
   bool isLoad = true;
 
-  String creatorsEmployID = '';
-  String creatorsPassword = '';
-  String newEmployID = '';
+  String name = '';
+  String phoneNumber = '';
+  String newEmailID = '';
   String newEmployIDPassword = '';
   String reNewEmployIDPassword = '';
 
   String? _userType;
+  String filterType = 'user';
 
   List<String> userType = [
     'User Type : Admin',
@@ -45,66 +47,72 @@ class _createNewUser extends State<CreateNewUserPage> {
   ];
 
   formValidator() {
-    String creatorsEmployIDVal = _creatorsEmployID.toString();
-    String creatorsPasswordVal = _creatorsPassword.toString();
-    String newEmployIDVal = _newEmployID.toString();
-    String newEmployIDPasswordVal = _newEmployIDPassword.toString();
-    String reNewEmployIDPasswordVal = _reNewEmployIDPassword.toString();
+    String nameVal = _nameController.toString();
+    String phoneNumberVal = _phoneNumberController.toString();
+    String newEmailIDVal = _newEmailIDController.toString();
+    String passwordVal = _newEmployIDPasswordController.toString();
+    String rePasswordVal = _reNewEmployIDPasswordController.toString();
     setState(() {
-      if (creatorsEmployIDVal == null || creatorsEmployIDVal.isEmpty) {
-        _creatorsEmployIDValidate = true;
+      if (nameVal == null || nameVal.isEmpty) {
+        _nameValidate = true;
       } else {
-        _creatorsEmployIDValidate = false;
+        _nameValidate = false;
       }
-      if (creatorsPasswordVal == null || creatorsPasswordVal.isEmpty) {
-        _creatorsPasswordValidate = true;
+      if (phoneNumberVal == null || phoneNumberVal.isEmpty) {
+        _phoneNumberValidate = true;
       } else {
-        _creatorsPasswordValidate = false;
+        _phoneNumberValidate = false;
       }
-      if (newEmployIDVal == null || newEmployIDVal.isEmpty) {
+      if (newEmailIDVal == null || newEmailIDVal.isEmpty) {
         _newEmployIDValidate = true;
       } else {
         _newEmployIDValidate = false;
       }
-      if (newEmployIDPasswordVal == null || newEmployIDPasswordVal.isEmpty) {
-        _newEmployIDPasswordValidate = true;
-      } else {
-        _newEmployIDPasswordValidate = false;
-      }
-      if (reNewEmployIDPasswordVal == null ||
-          reNewEmployIDPasswordVal.isEmpty) {
-        _reNewEmployIDPasswordValidate = true;
-      } else {
-        _reNewEmployIDPasswordValidate = false;
-      }
+      // if (passwordVal == null || passwordVal.isEmpty) {
+      //   _newEmployIDPasswordValidate = true;
+      // } else {
+      //   _newEmployIDPasswordValidate = false;
+      // }
+      // if (rePasswordVal == null || rePasswordVal.isEmpty) {
+      //   _reNewEmployIDPasswordValidate = true;
+      // } else {
+      //   _reNewEmployIDPasswordValidate = false;
+      // }
       // if (meetDate == null || meet_date.isEmpty) {
       //   _meetDateVaidate = true;
       // } else {
       //   _meetDateVaidate = false;
       // }
     });
-    if (!_creatorsEmployIDValidate &&
-        !_creatorsPasswordValidate &&
-        !_newEmployIDValidate &&
-        !_newEmployIDPasswordValidate &&
-        !_reNewEmployIDPasswordValidate) {
+    if (!_nameValidate && !_phoneNumberValidate && !_newEmployIDValidate
+        // !_newEmployIDPasswordValidate &&
+        // !_reNewEmployIDPasswordValidate
+        ) {
       return true;
     } else {
       return false;
     }
   }
 
+  changeFilter(String filter) {
+    filterType = filter;
+    setState(() {});
+  }
+
   Future<String> createAlbum() async {
     var response = await http.post(
-        Uri.parse('http://202.84.44.234:9085/rbd/leadInfoApi/changePwd'),
+        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Authorization':
+              'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvMTAuMTAwLjE3LjQ3XC9GYWlyRXhcL2FwaVwvdjFcL2FkbWluXC9sb2dpbiIsImlhdCI6MTY0ODQ2MjY4NywibmJmIjoxNjQ4NDYyNjg3LCJqdGkiOiI0OVk1OEN5dkhrbUxsc25XIiwic3ViIjoyLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.7pmt6Tjglssmuf_qMMggA8NvLG4x1rTU0GfyjcXVp0w'
         },
         body: jsonEncode(<String, String>{
           //'new_lead_transaction': jsonEncode(<String, String>{
-          'username': creatorsEmployID,
-          'creatorsPassword': creatorsPassword,
+          'name': name,
+          'email': newEmailID,
+          'phone': phoneNumber,
+          'password': '123456',
           //'newPassword': newPassword
         }
             // ),}
@@ -146,9 +154,68 @@ class _createNewUser extends State<CreateNewUserPage> {
               height: 100.0,
               width: MediaQuery.of(context).size.width,
             ),
+            Container(
+              height: 70,
+              color: Colors.lightBlue[400],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          changeFilter("user");
+                        },
+                        child: Text(
+                          "Create User",
+                          style: GoogleFonts.mcLaren(
+                              color: Colors.lightBlue[100], fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 4,
+                        width: 120,
+                        color: (filterType == "user")
+                            ? Colors.white
+                            : Colors.transparent,
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          changeFilter("admin");
+                        },
+                        child: Text(
+                          "Create Admin",
+                          style: GoogleFonts.mcLaren(
+                              color: Colors.lightBlue[100], fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 4,
+                        width: 120,
+                        color: (filterType == "admin")
+                            ? Colors.lightBlue[100]
+                            : Colors.transparent,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
 
             Padding(
-              padding: const EdgeInsets.only(top: 100, left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(top: 50, left: 10.0, right: 10.0),
               child: Container(
                 padding: EdgeInsets.only(left: 5.0),
                 decoration: BoxDecoration(
@@ -158,114 +225,13 @@ class _createNewUser extends State<CreateNewUserPage> {
                     ),
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
-                  controller: _creatorsEmployID,
-                  style: GoogleFonts.mcLaren(color: Colors.lightBlue[100]),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    errorText: _creatorsEmployIDValidate
-                        ? 'Value Can\'t Be Empty'
-                        : null,
-                    labelText: 'Creator\'s EmployID* : ',
-                    labelStyle: GoogleFonts.mcLaren(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.lightBlue[100]),
-                  ),
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
-              child: Container(
-                padding: EdgeInsets.only(left: 5.0),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.lightBlueAccent,
-                      width: 3.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  controller: _creatorsPassword,
-                  style: GoogleFonts.mcLaren(color: Colors.lightBlue[100]),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    errorText: _creatorsPasswordValidate
-                        ? 'Value Can\'t Be Empty'
-                        : null,
-                    labelText: 'Creator\'s Password* : ',
-                    labelStyle: GoogleFonts.mcLaren(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.lightBlue[100]),
-                  ),
-                  obscureText: true,
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
-              child: Container(
-                padding: EdgeInsets.only(left: 5.0),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.lightBlueAccent,
-                      width: 3.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    hint: Text(
-                      'User Type* :',
-                      style: GoogleFonts.mcLaren(
-                          color: Colors.lightBlue[100],
-                          fontWeight: FontWeight.bold),
-                    ),
-                    items: userType
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: GoogleFonts.mcLaren(
-                                    color: Colors.lightBlue[100],
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ))
-                        .toList(),
-                    value: _userType,
-                    onChanged: (value) {
-                      setState(() {
-                        _userType = value as String;
-                      });
-                    },
-                    buttonHeight: 50,
-                    buttonWidth: MediaQuery.of(context).size.width - 20,
-                    itemHeight: 50,
-                    dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.lightBlue,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
-              child: Container(
-                padding: EdgeInsets.only(left: 5.0),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.lightBlueAccent,
-                      width: 3.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  controller: _newEmployID,
+                  controller: _newEmailIDController,
                   style: GoogleFonts.mcLaren(color: Colors.lightBlue[100]),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     errorText:
                         _newEmployIDValidate ? 'Value Can\'t Be Empty' : null,
-                    labelText: 'New EmployID* : ',
+                    labelText: 'New Employee Email ID* : ',
                     labelStyle: GoogleFonts.mcLaren(
                         fontWeight: FontWeight.bold,
                         color: Colors.lightBlue[100]),
@@ -285,14 +251,13 @@ class _createNewUser extends State<CreateNewUserPage> {
                     ),
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
-                  controller: _newEmployIDPassword,
+                  controller: _phoneNumberController,
                   style: GoogleFonts.mcLaren(color: Colors.lightBlue[100]),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    errorText: _newEmployIDPasswordValidate
-                        ? 'Value Can\'t Be Empty'
-                        : null,
-                    labelText: 'New Employ Password* : ',
+                    errorText:
+                        _phoneNumberValidate ? 'Value Can\'t Be Empty' : null,
+                    labelText: 'Name* : ',
                     labelStyle: GoogleFonts.mcLaren(
                         fontWeight: FontWeight.bold,
                         color: Colors.lightBlue[100]),
@@ -312,14 +277,14 @@ class _createNewUser extends State<CreateNewUserPage> {
                     ),
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
-                  controller: _reNewEmployIDPassword,
+                  controller: _phoneNumberController,
+                  keyboardType: TextInputType.number,
                   style: GoogleFonts.mcLaren(color: Colors.lightBlue[100]),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    errorText: _reNewEmployIDPasswordValidate
-                        ? 'Value Can\'t Be Empty'
-                        : null,
-                    labelText: 'Re-type New Employ Password* : ',
+                    errorText:
+                        _phoneNumberValidate ? 'Value Can\'t Be Empty' : null,
+                    labelText: 'Phone Number* : ',
                     labelStyle: GoogleFonts.mcLaren(
                         fontWeight: FontWeight.bold,
                         color: Colors.lightBlue[100]),
@@ -328,6 +293,82 @@ class _createNewUser extends State<CreateNewUserPage> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
+              child: Container(
+                padding: EdgeInsets.only(left: 5.0),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.lightBlueAccent,
+                      width: 3.0,
+                    ),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Text('Password : 123456',
+                    style: GoogleFonts.mcLaren(
+                      color: Colors.lightBlue[100],
+                      fontSize: 18,
+                    )),
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.centerLeft,
+              ),
+            ),
+
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
+            //   child: Container(
+            //     padding: EdgeInsets.only(left: 5.0),
+            //     decoration: BoxDecoration(
+            //         border: Border.all(
+            //           color: Colors.lightBlueAccent,
+            //           width: 3.0,
+            //         ),
+            //         borderRadius: BorderRadius.circular(10)),
+            //     child: TextField(
+            //       controller: _newEmployIDPasswordController,
+            //       style: GoogleFonts.mcLaren(color: Colors.lightBlue[100]),
+            //       decoration: InputDecoration(
+            //         border: InputBorder.none,
+            //         errorText: _newEmployIDPasswordValidate
+            //             ? 'Value Can\'t Be Empty'
+            //             : null,
+            //         labelText: 'New Password* : ',
+            //         labelStyle: GoogleFonts.mcLaren(
+            //             fontWeight: FontWeight.bold,
+            //             color: Colors.lightBlue[100]),
+            //       ),
+            //       obscureText: true,
+            //     ),
+            //   ),
+            // ),
+
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
+            //   child: Container(
+            //     padding: EdgeInsets.only(left: 5.0),
+            //     decoration: BoxDecoration(
+            //         border: Border.all(
+            //           color: Colors.lightBlueAccent,
+            //           width: 3.0,
+            //         ),
+            //         borderRadius: BorderRadius.circular(10)),
+            //     child: TextField(
+            //       controller: _reNewEmployIDPasswordController,
+            //       style: GoogleFonts.mcLaren(color: Colors.lightBlue[100]),
+            //       decoration: InputDecoration(
+            //         border: InputBorder.none,
+            //         errorText: _reNewEmployIDPasswordValidate
+            //             ? 'Value Can\'t Be Empty'
+            //             : null,
+            //         labelText: 'Re-type New Employ Password* : ',
+            //         labelStyle: GoogleFonts.mcLaren(
+            //             fontWeight: FontWeight.bold,
+            //             color: Colors.lightBlue[100]),
+            //       ),
+            //       obscureText: true,
+            //     ),
+            //   ),
+            // ),
 
             SizedBox(height: 40.0),
             // save
@@ -351,8 +392,8 @@ class _createNewUser extends State<CreateNewUserPage> {
                           isLoad = false;
                         });
 
-                        if (_newEmployID.toString() !=
-                            _newEmployIDPassword.toString()) {
+                        if (_newEmployIDPasswordController.toString() !=
+                            _reNewEmployIDPasswordController.toString()) {
                           Fluttertoast.showToast(
                               msg: "Typed Password Don't Match",
                               toastLength: Toast.LENGTH_SHORT,
@@ -367,12 +408,11 @@ class _createNewUser extends State<CreateNewUserPage> {
                             },
                           );
                         } else {
-                          creatorsEmployID = _creatorsEmployID.toString();
-                          creatorsPassword = _creatorsPassword.toString();
-                          newEmployID = _newEmployID.toString();
-                          newEmployIDPassword = _newEmployIDPassword.toString();
-                          reNewEmployIDPassword =
-                              _reNewEmployIDPassword.toString();
+                          newEmailID = _newEmailIDController.toString();
+                          newEmployIDPassword =
+                              _newEmployIDPasswordController.toString();
+                          phoneNumber = _phoneNumberController.toString();
+                          name = _nameController.toString();
 
                           var response = await createAlbum();
 

@@ -5,6 +5,9 @@ class Constants {
 
   static String version = '1.0.1';
 
-  static String employeeIDKey = 'EmployeeID';
+  static String userTypeKey = 'userType';
   static String logInStatusKey = 'logInStatus';
+  static String userNameKey = 'userName';
+  static String userPhoneKey = 'phoneNumber';
+  static String accessTokenKey = 'token';
 }

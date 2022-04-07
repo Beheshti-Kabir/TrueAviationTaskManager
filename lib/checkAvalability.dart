@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:true_aviation_task/lobby.dart';
+import 'package:true_aviation_task/adminLobby.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -314,237 +314,410 @@ class _checkAvailability extends State<CheckAvailabilityPage> {
               height: 20.0,
             ),
 
-            //if (room1.isNotEmpty) 
+            //if (room1.isNotEmpty)
             SingleChildScrollView(
-             child: Column(children: <Widget>[
-               Container(
-                 padding: EdgeInsets.only(left: 10.0),
-                child:  Text (
-                'Meeting Room 1',
-                style: GoogleFonts.mcLaren( color: Colors.green, fontSize: 20.0,fontWeight: FontWeight.bold),
-              ),
-              alignment: Alignment.topLeft,
-            ),
-            SizedBox(height: 10.0,),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.greenAccent,
-                                      width: 3.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10)),
-                child: Table(
-                  
-                  defaultColumnWidth: FixedColumnWidth((MediaQuery.of(context).size.width)*0.30),
-                  // border: TableBorder.all(color: Colors.white,
-                  //                     style: BorderStyle.solid,
-                  //                     width: 0),
-                  children: [
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        
-                        child: Text('Date',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Time',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Chaired By',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),)
-                      ]
-                    ),
-                    
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('10/10/2022',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:10 pm - 3:45 pm',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('ChairmanChairman Chairman',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),)
-                      ]
-                    ),
-                    
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('10/10/2022',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:10 pm - 3:45 pm',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('ChairmanChairman Chairman',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),)
-                      ]
-                    ),
-                  ],
-                ),
-              ),
-            )
-            ],)
-            ) ,
-            SizedBox(
-              height: 20.0,
-            ),
-
-            //if (room1.isNotEmpty) 
-            SingleChildScrollView(
-             child: Column(children: <Widget>[
-               Container(
-                 padding: EdgeInsets.only(left: 10.0),
-                child:  Text (
-                'Meeting Room 2',
-                style: GoogleFonts.mcLaren( color: Colors.green, fontSize: 20.0,fontWeight: FontWeight.bold),
-              ),
-              alignment: Alignment.topLeft,
-            ),
-            SizedBox(height: 10.0,),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.greenAccent,
-                                      width: 3.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10)),
-                child: Table(
-                  
-                  defaultColumnWidth: FixedColumnWidth((MediaQuery.of(context).size.width)*0.30),
-                  // border: TableBorder.all(color: Colors.white,
-                  //                     style: BorderStyle.solid,
-                  //                     width: 2),
-                  children: [
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Date',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Time',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Chaired By',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),)
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('10/10/2022',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:10 pm - 3:45 pm',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('ChairmanChairman Chairman',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,),),)
-                      ]
-                    ),
-                  ],
-                ),
-              ),
-            )
-            ],)
-            ) ,
-            SizedBox(
-              height: 20.0,
-            ),
-
-            //if (room1.isNotEmpty) 
-            SingleChildScrollView(
-             child: Column(children: <Widget>[
-               Container(
-                 padding: EdgeInsets.only(left: 10.0),
-                child:  Text (
-                'Meeting Room 3',
-                style: GoogleFonts.mcLaren( color: Colors.green, fontSize: 20.0,fontWeight: FontWeight.bold),
-              ),
-              alignment: Alignment.topLeft,
-            ),
-            SizedBox(height: 10.0,),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                 decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.greenAccent,
-                                      width: 3.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10)),
-                child: Table(
-                  
-                  defaultColumnWidth: FixedColumnWidth((MediaQuery.of(context).size.width)*0.30),
-                  // border: TableBorder.all(color: Colors.white,
-                  //                     style: BorderStyle.solid,
-                  //                     width: 2),
-                  children: [
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Date',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Time',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('Chaired By',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent,fontWeight: FontWeight.bold),),)
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('10/10/2022',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:10 pm - 3:45 pm',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('ChairmanChairman Chairman',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),)
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('10/10/2022',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:10 pm - 3:45 pm',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('ChairmanChairman Chairman',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),)
-                      ]
-                    ),
-                    TableRow(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('10/10/2022',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('3:10 pm - 3:45 pm',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),),
-                        Padding(padding: const EdgeInsets.only(left: 4.0),
-                        child: Text('ChairmanChairman Chairman',style: GoogleFonts.mcLaren(color:Colors.lightGreenAccent),),)
-                      ]
-                    ),
-                  ],
-                ),
-              ),
-            )
-            ],)
-            ) ,
-            SizedBox(height: 20.0,),
-            Container(
-              alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      height: 40.0,
-                    width: 150.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.green,
+                child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Meeting Room 1',
+                    style: GoogleFonts.mcLaren(
                         color: Colors.green,
-                        elevation: 7.0,
-                        child: Center(
-                          child: Text(
-                            "Booking Page",
-                            style:
-                                GoogleFonts.mcLaren(color: Colors.white,),
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  alignment: Alignment.topLeft,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.greenAccent,
+                          width: 3.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Table(
+                      defaultColumnWidth: FixedColumnWidth(
+                          (MediaQuery.of(context).size.width) * 0.30),
+                      // border: TableBorder.all(color: Colors.white,
+                      //                     style: BorderStyle.solid,
+                      //                     width: 0),
+                      children: [
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Date',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Time',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Chaired By',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '10/10/2022',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:10 pm - 3:45 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'ChairmanChairman Chairman',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '10/10/2022',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:10 pm - 3:45 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'ChairmanChairman Chairman',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          )
+                        ]),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )),
+            SizedBox(
+              height: 20.0,
+            ),
+
+            //if (room1.isNotEmpty)
+            SingleChildScrollView(
+                child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Meeting Room 2',
+                    style: GoogleFonts.mcLaren(
+                        color: Colors.green,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  alignment: Alignment.topLeft,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.greenAccent,
+                          width: 3.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Table(
+                      defaultColumnWidth: FixedColumnWidth(
+                          (MediaQuery.of(context).size.width) * 0.30),
+                      // border: TableBorder.all(color: Colors.white,
+                      //                     style: BorderStyle.solid,
+                      //                     width: 2),
+                      children: [
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Date',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Time',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Chaired By',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '10/10/2022',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:10 pm - 3:45 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'ChairmanChairman Chairman',
+                              style: GoogleFonts.mcLaren(
+                                color: Colors.lightGreenAccent,
+                              ),
+                            ),
+                          )
+                        ]),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )),
+            SizedBox(
+              height: 20.0,
+            ),
+
+            //if (room1.isNotEmpty)
+            SingleChildScrollView(
+                child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Meeting Room 3',
+                    style: GoogleFonts.mcLaren(
+                        color: Colors.green,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  alignment: Alignment.topLeft,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.greenAccent,
+                          width: 3.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Table(
+                      defaultColumnWidth: FixedColumnWidth(
+                          (MediaQuery.of(context).size.width) * 0.30),
+                      // border: TableBorder.all(color: Colors.white,
+                      //                     style: BorderStyle.solid,
+                      //                     width: 2),
+                      children: [
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Date',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Time',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Chaired By',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '10/10/2022',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:10 pm - 3:45 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'ChairmanChairman Chairman',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '10/10/2022',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:10 pm - 3:45 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'ChairmanChairman Chairman',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          )
+                        ]),
+                        TableRow(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '10/10/2022',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              '3:10 pm - 3:45 pm',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'ChairmanChairman Chairman',
+                              style: GoogleFonts.mcLaren(
+                                  color: Colors.lightGreenAccent),
+                            ),
+                          )
+                        ]),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )),
+            SizedBox(
+              height: 20.0,
+            ),
+            Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    height: 40.0,
+                    width: 150.0,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(20.0),
+                      shadowColor: Colors.green,
+                      color: Colors.green,
+                      elevation: 7.0,
+                      child: Center(
+                        child: Text(
+                          "Booking Page",
+                          style: GoogleFonts.mcLaren(
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ),)),
-                    SizedBox(height: 20.0,),
-
+                    ),
+                  ),
+                )),
+            SizedBox(
+              height: 20.0,
+            ),
           ],
         ),
       )),

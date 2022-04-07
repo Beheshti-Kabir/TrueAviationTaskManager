@@ -10,7 +10,7 @@ import 'package:true_aviation_task/changePassword.dart';
 import 'package:true_aviation_task/checkAvalability.dart';
 import 'package:true_aviation_task/createNewUser.dart';
 import 'package:true_aviation_task/justSubTaskAdd.dart';
-import 'package:true_aviation_task/lobby.dart';
+import 'package:true_aviation_task/adminLobby.dart';
 import 'package:true_aviation_task/calender.dart';
 import 'package:true_aviation_task/logInPage.dart';
 import 'package:true_aviation_task/subTaskDetails.dart';
@@ -21,9 +21,8 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:flutter/material.dart';
+import 'package:true_aviation_task/userLobby.dart';
 import 'package:true_aviation_task/utils/session_maneger.dart';
-import 'api_service.dart';
-import 'controller.dart';
 
 //void main() => runApp(MyApp());
 
@@ -52,6 +51,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lobby': (BuildContext context) => LobbyPage(),
+        '/userLobby': (BuildContext context) => UserLobbyPage(),
         '/changePassword': (BuildContext context) => ChangePasswordPage(),
         '/createNewUser': (BuildContext context) => CreateNewUserPage(),
         '/calender': (BuildContext context) => CalenderPage(),
@@ -88,11 +88,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   getRoutePath() async {
-    String vari = await localGetEmployeeID();
-    print('main=' + vari);
-    bool logInStatus = await localLoginStatus();
-    if (logInStatus) {
-      route = '/lobby';
+    bool logINStatus = await getLocalLoginStatus();
+    print('status=> ' + logINStatus.toString());
+    String userType = await getLocalUserTpe();
+    print('type=> ' + userType);
+    if (logINStatus) {
+      if (userType == 'admin') {
+        route = '/lobby';
+      } else {
+        route = '/userLobby';
+      }
     } else {
       route = '/logINPage';
     }
@@ -102,13 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset('assets/fairgroup_logo.jpg'),
+              Image.asset('asset/trueAviationWhiteJPG.jpg'),
             ],
           ),
         ),
