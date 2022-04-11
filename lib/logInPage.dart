@@ -1,18 +1,6 @@
 import 'dart:convert';
 //import 'dart:html';
-import 'dart:io';
-
-import 'package:true_aviation_task/assignTask.dart';
-import 'package:true_aviation_task/changePassword.dart';
-import 'package:true_aviation_task/checkAvalability.dart';
 import 'package:true_aviation_task/constants.dart';
-import 'package:true_aviation_task/createNewUser.dart';
-import 'package:true_aviation_task/justSubTaskAdd.dart';
-import 'package:true_aviation_task/adminLobby.dart';
-import 'package:true_aviation_task/calender.dart';
-import 'package:true_aviation_task/subTaskDetails.dart';
-import 'package:true_aviation_task/todaysTasks.dart';
-import 'package:true_aviation_task/allTasks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,12 +19,13 @@ class _LogINPageState extends State<LogInPage> {
   bool _emailValidate = false;
   bool _passwordValidate = false;
   String filterType = "user";
-  String URL = 'https://10.100.17.234/FairEx/api/v1/user/login';
+  //String URL = 'https://10.100.17.234/FairEx/api/v1/user/login';
+  String URL = 'https://trueaviation.aero/FairEx/api/v1/user/login';
   String email = '';
   String password = '';
   String token = '';
   String userName = '';
-  String phoneNumber = '';
+  String emailID = '';
   String userType = 'user';
   String route = '/userLobby';
   String message = '';
@@ -75,12 +64,12 @@ class _LogINPageState extends State<LogInPage> {
 
     // Constants.employeeId = _emailController.text.trim();
     storeLocalSetUserName(Constants.userNameKey, userName);
-    storeLocalSetUserNumber(Constants.userPhoneKey, phoneNumber);
+    storeLocalSetUserEmailID(Constants.userEmailKey, emailID);
     storeLocalSetAccessToken(Constants.accessTokenKey, token);
     storeLocalSetUserType(Constants.userTypeKey, userType);
 
     storeLocalSetLogInStatus(Constants.logInStatusKey, 'true');
-    print('$userName $phoneNumber  $userType $token');
+    print('$userName $emailID  $userType $token');
     message = 'Logging In';
     Navigator.of(context).pushNamed(route);
   }
@@ -105,7 +94,7 @@ class _LogINPageState extends State<LogInPage> {
     token = json.decode(response.body)['token_type'].toString() +
         ' ' +
         json.decode(response.body)['access_token'].toString();
-    phoneNumber = json.decode(response.body)['user']['phone'].toString();
+    emailID = json.decode(response.body)['user']['email'].toString();
     userName = json.decode(response.body)['user']['name'].toString();
 
     print(responsee);
@@ -204,7 +193,8 @@ class _LogINPageState extends State<LogInPage> {
                       InkWell(
                         onTap: () {
                           URL =
-                              'https://10.100.17.234/FairEx/api/v1/user/login';
+                              //'https://10.100.17.234/FairEx/api/v1/user/login';
+                              'https://trueaviation.aero/FairEx/api/v1/user/login';
                           route = '/userLobby';
                           userType = 'user';
                           changeFilter("user");
@@ -244,7 +234,8 @@ class _LogINPageState extends State<LogInPage> {
                       InkWell(
                         onTap: () {
                           URL =
-                              'https://10.100.17.234/FairEx/api/v1/admin/login';
+                              //'https://10.100.17.234/FairEx/api/v1/admin/login';
+                              'https://trueaviation.aero/FairEx/api/v1/admin/login';
                           route = '/lobby';
                           userType = 'admin';
                           changeFilter("admin");

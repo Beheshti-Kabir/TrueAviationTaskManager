@@ -64,19 +64,21 @@ class _calender extends State<CalenderPage> {
   // }
   changeStatus(String state, String sub_task_id) async {
     String boolState = '';
+    String token = await getLocalToken();
     if (state == 'Done') {
       boolState = '0';
     } else {
       boolState = '1';
     }
-    String URL = 'https://10.100.17.234/FairEx/api/v1/meet/sub-task/status/' +
-        sub_task_id;
+    //String URL = 'https://10.100.17.234/FairEx/api/v1/meet/sub-task/status/' +
+    String URL =
+        'https://trueaviation.aero/FairEx/api/v1/meet/sub-task/status/' +
+            sub_task_id;
     response = await http.post(Uri.parse(URL),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization':
-              'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvMTAuMTAwLjE3LjQ3XC9GYWlyRXhcL2FwaVwvdjFcL2FkbWluXC9sb2dpbiIsImlhdCI6MTY0ODQ2MjY4NywibmJmIjoxNjQ4NDYyNjg3LCJqdGkiOiI0OVk1OEN5dkhrbUxsc25XIiwic3ViIjoyLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.7pmt6Tjglssmuf_qMMggA8NvLG4x1rTU0GfyjcXVp0w',
+          'Authorization': token,
         },
         body: jsonEncode(<String, String>{
           // 'userID': Constants.employeeId,
@@ -106,15 +108,17 @@ class _calender extends State<CalenderPage> {
     print('status=' + logINStatus.toString());
     String userType = await getLocalUserTpe();
     print('type=> ' + userType);
+    String token = await getLocalToken();
+    print('token=> ' + token);
     isLoading = false;
     print('desired:' + dateFind);
     response = await http.post(
-        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task/date'),
+        //Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task/date'),
+        Uri.parse('https://trueaviation.aero/FairEx/api/v1/meet/task/date'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization':
-              'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvMTAuMTAwLjE3LjQ3XC9GYWlyRXhcL2FwaVwvdjFcL2FkbWluXC9sb2dpbiIsImlhdCI6MTY0ODQ2MjY4NywibmJmIjoxNjQ4NDYyNjg3LCJqdGkiOiI0OVk1OEN5dkhrbUxsc25XIiwic3ViIjoyLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.7pmt6Tjglssmuf_qMMggA8NvLG4x1rTU0GfyjcXVp0w',
+          'Authorization': token
         },
         body: jsonEncode(<String, String>{
           // 'userID': Constants.employeeId,
@@ -195,12 +199,17 @@ class _calender extends State<CalenderPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                child: Text(
-                  'Calendar',
-                  style: GoogleFonts.mcLaren(
-                    fontSize: 35.0,
-                    color: Colors.pink[100],
-                    fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Calendar',
+                    style: GoogleFonts.mcLaren(
+                      fontSize: 35.0,
+                      color: Colors.pink[100],
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 alignment: Alignment.center,

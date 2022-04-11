@@ -12,6 +12,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:true_aviation_task/constants.dart';
 
 import 'package:true_aviation_task/modelSubTasks.dart';
+import 'package:true_aviation_task/utils/session_maneger.dart';
 
 class CustomPicker extends CommonPickerModel {
   String digits(int value, int length) {
@@ -145,14 +146,15 @@ class _JustSubTasksPageState extends State<JustSubTasksPage> {
     // });
     subTaskList = [''];
     taskTitleList = [''];
+    String token = await getLocalToken();
 
     print('Inside Get Data');
     response = await http.get(
-      Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
+      //Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
+      Uri.parse('https://trueaviation.aero/FairEx/api/v1/meet/task'),
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'Authorization':
-            'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvMTAuMTAwLjE3LjQ3XC9GYWlyRXhcL2FwaVwvdjFcL2FkbWluXC9sb2dpbiIsImlhdCI6MTY0ODQ2MjY4NywibmJmIjoxNjQ4NDYyNjg3LCJqdGkiOiI0OVk1OEN5dkhrbUxsc25XIiwic3ViIjoyLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.7pmt6Tjglssmuf_qMMggA8NvLG4x1rTU0GfyjcXVp0w',
+        'Authorization': token
       },
     );
     taskJSON = jsonDecode(response.body);
@@ -260,12 +262,13 @@ class _JustSubTasksPageState extends State<JustSubTasksPage> {
   Future<String> createAlbum() async {
     print('inhttp');
     print('object' + id);
+    String token = await getLocalToken();
     var response = await http.post(
-        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/sub-task'),
+        //Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/sub-task'),
+        Uri.parse('https://trueaviation.aero/FairEx/api/v1/meet/sub-task'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization':
-              'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvMTAuMTAwLjE3LjQ3XC9GYWlyRXhcL2FwaVwvdjFcL2FkbWluXC9sb2dpbiIsImlhdCI6MTY0ODQ2MjY4NywibmJmIjoxNjQ4NDYyNjg3LCJqdGkiOiI0OVk1OEN5dkhrbUxsc25XIiwic3ViIjoyLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.7pmt6Tjglssmuf_qMMggA8NvLG4x1rTU0GfyjcXVp0w'
+          'Authorization': token
         },
         body: jsonEncode(<String, String>{
           //'new_lead_transaction': jsonEncode(<String, String>{
@@ -301,12 +304,17 @@ class _JustSubTasksPageState extends State<JustSubTasksPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                child: Text(
-                  'Giving Sub Tasks',
-                  style: GoogleFonts.mcLaren(
-                    fontSize: 35.0,
-                    color: Colors.lightGreen[100],
-                    fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Giving Sub Tasks',
+                    style: GoogleFonts.mcLaren(
+                      fontSize: 35.0,
+                      color: Colors.lightGreen[100],
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 alignment: Alignment.center,
@@ -535,7 +543,7 @@ class _JustSubTasksPageState extends State<JustSubTasksPage> {
                         width: 80.0,
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.lightGreen[600],
+                          // shadowColor: Colors.lightGreen[600],
                           color: Colors.green[800],
                           elevation: 7.0,
                           child: Center(
@@ -573,7 +581,7 @@ class _JustSubTasksPageState extends State<JustSubTasksPage> {
                         width: 80.0,
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.lightGreen[600],
+                          // shadowColor: Colors.lightGreen[600],
                           color: Colors.green[800],
                           elevation: 7.0,
                           child: Center(

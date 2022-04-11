@@ -13,7 +13,7 @@ Future storeLocalSetUserName(String key, String value) async {
   await _sharedPreferences.setString(key, value);
 }
 
-Future storeLocalSetUserNumber(String key, String value) async {
+Future storeLocalSetUserEmailID(String key, String value) async {
   final _sharedPreferences = await SharedPreferences.getInstance();
 
   await _sharedPreferences.setString(key, value);
@@ -54,9 +54,9 @@ Future<String> getLocalUserName() async {
   //return value !=null?true:false;
 }
 
-Future<String> getLocalUserPhoneNumber() async {
+Future<String> getLocalUserEmailID() async {
   final _sharedPreferences = await SharedPreferences.getInstance();
-  var value = _sharedPreferences.getString(Constants.userPhoneKey);
+  var value = _sharedPreferences.getString(Constants.userEmailKey);
   //bool valueCheck = value!.isEmpty;
   print('checked user phone =>' + value.toString());
 

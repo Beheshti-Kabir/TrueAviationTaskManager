@@ -31,7 +31,22 @@ class _userLobbyPage extends State<UserLobbyPage> {
   double buttonWidth = 300;
   double buttonHeight = 50;
   double textSize = 20;
+  String userName = '';
+  String emailID = '';
 
+  getUserInfo() async {
+    userName = await getLocalUserName();
+    emailID = await getLocalUserEmailID();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getUserInfo();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white10,
@@ -72,6 +87,29 @@ class _userLobbyPage extends State<UserLobbyPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Container(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'Hi,',
+                            style: GoogleFonts.mcLaren(
+                              fontSize: 20.0,
+                              color: Colors.amberAccent[200],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            userName,
+                            style: GoogleFonts.mcLaren(
+                              fontSize: 20.0,
+                              color: Colors.amberAccent[200],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      )),
+
                   Container(
                     padding: EdgeInsets.only(top: 120),
                     //padding: EdgeInsets.fromLTRB(
@@ -229,7 +267,7 @@ class _userLobbyPage extends State<UserLobbyPage> {
                         storeLocalSetLogInStatus(
                             Constants.logInStatusKey, 'false');
                         storeLocalSetUserName(Constants.userNameKey, '');
-                        storeLocalSetUserNumber(Constants.userPhoneKey, '');
+                        storeLocalSetUserEmailID(Constants.userEmailKey, '');
                         storeLocalSetUserType(Constants.userTypeKey, '');
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(

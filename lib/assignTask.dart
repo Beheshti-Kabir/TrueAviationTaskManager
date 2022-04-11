@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:true_aviation_task/modelSubTasks.dart';
+import 'package:true_aviation_task/utils/session_maneger.dart';
 
 class CustomPicker extends CommonPickerModel {
   String digits(int value, int length) {
@@ -226,14 +227,15 @@ class _assignTask extends State<AssignTask> {
   Future<String> createAlbum() async {
     taskDate = _taskDateController.toString();
     taskTitle = _taskTitleController.text;
+    String token = await getLocalToken();
     print('task =>' + taskTitle);
     print('taskdate =>' + taskDate);
     var response = await http.post(
-        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
+        //Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
+        Uri.parse('https://trueaviation.aero/FairEx/api/v1/meet/task'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization':
-              'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvMTAuMTAwLjE3LjQ3XC9GYWlyRXhcL2FwaVwvdjFcL2FkbWluXC9sb2dpbiIsImlhdCI6MTY0ODQ2MjY4NywibmJmIjoxNjQ4NDYyNjg3LCJqdGkiOiI0OVk1OEN5dkhrbUxsc25XIiwic3ViIjoyLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.7pmt6Tjglssmuf_qMMggA8NvLG4x1rTU0GfyjcXVp0w'
+          'Authorization': token
         },
         body: jsonEncode(<String, String>{
           'title': taskTitle,
@@ -272,12 +274,17 @@ class _assignTask extends State<AssignTask> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                child: Text(
-                  'Assigning A Task',
-                  style: GoogleFonts.mcLaren(
-                    fontSize: 35.0,
-                    color: Colors.lightGreen[100],
-                    fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Assigning A Task',
+                    style: GoogleFonts.mcLaren(
+                      fontSize: 35.0,
+                      color: Colors.lightGreen[100],
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 alignment: Alignment.center,

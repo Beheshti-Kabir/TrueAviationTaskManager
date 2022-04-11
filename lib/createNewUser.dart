@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:true_aviation_task/utils/session_maneger.dart';
 
 class CreateNewUserPage extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _createNewUser extends State<CreateNewUserPage> {
 
   bool _phoneNumberValidate = false;
   bool _nameValidate = false;
-  bool _newEmployIDValidate = false;
+  bool _newEmailIDValidate = false;
   bool _newEmployIDPasswordValidate = false;
   bool _reNewEmployIDPasswordValidate = false;
 
@@ -40,6 +41,8 @@ class _createNewUser extends State<CreateNewUserPage> {
 
   String? _userType;
   String filterType = 'user';
+  //String URL = 'https://10.100.17.47/FairEx/api/v1/user/register';
+  String URL = 'https://trueaviation.aero/FairEx/api/v1/user/register';
 
   List<String> userType = [
     'User Type : Admin',
@@ -64,9 +67,9 @@ class _createNewUser extends State<CreateNewUserPage> {
         _phoneNumberValidate = false;
       }
       if (newEmailIDVal == null || newEmailIDVal.isEmpty) {
-        _newEmployIDValidate = true;
+        _newEmailIDValidate = true;
       } else {
-        _newEmployIDValidate = false;
+        _newEmailIDValidate = false;
       }
       // if (passwordVal == null || passwordVal.isEmpty) {
       //   _newEmployIDPasswordValidate = true;
@@ -84,7 +87,7 @@ class _createNewUser extends State<CreateNewUserPage> {
       //   _meetDateVaidate = false;
       // }
     });
-    if (!_nameValidate && !_phoneNumberValidate && !_newEmployIDValidate
+    if (!_nameValidate && !_phoneNumberValidate && !_newEmailIDValidate
         // !_newEmployIDPasswordValidate &&
         // !_reNewEmployIDPasswordValidate
         ) {
@@ -100,12 +103,13 @@ class _createNewUser extends State<CreateNewUserPage> {
   }
 
   Future<String> createAlbum() async {
+    String token = await getLocalToken();
     var response = await http.post(
-        Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
+        //Uri.parse('https://10.100.17.234/FairEx/api/v1/meet/task'),
+        Uri.parse('https://trueaviation.aero/FairEx/api/v1/meet/task'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization':
-              'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvMTAuMTAwLjE3LjQ3XC9GYWlyRXhcL2FwaVwvdjFcL2FkbWluXC9sb2dpbiIsImlhdCI6MTY0ODQ2MjY4NywibmJmIjoxNjQ4NDYyNjg3LCJqdGkiOiI0OVk1OEN5dkhrbUxsc25XIiwic3ViIjoyLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.7pmt6Tjglssmuf_qMMggA8NvLG4x1rTU0GfyjcXVp0w'
+          'Authorization': token
         },
         body: jsonEncode(<String, String>{
           //'new_lead_transaction': jsonEncode(<String, String>{
@@ -118,12 +122,12 @@ class _createNewUser extends State<CreateNewUserPage> {
             // ),}
 
             ));
-    var responsee = json.decode(response.body)['result'];
+    var responsee = json.decode(response.body)['status'];
     if (response.statusCode == 200) {
       if (responsee.toString().toLowerCase().trim() == 'fail') {
         return 'Creator\'s EmployID & Password Don\'t Match';
       } else {
-        return json.decode(response.body)['result'];
+        return json.decode(response.body)['status'].toString();
       }
     } else {
       return 'Server issues';
@@ -165,12 +169,20 @@ class _createNewUser extends State<CreateNewUserPage> {
                     children: [
                       InkWell(
                         onTap: () {
+                          URL =
+                              'https://trueaviation.aero/FairEx/api/v1/user/register';
+                          // 'https://10.100.17.47/FairEx/api/v1/user/register';
                           changeFilter("user");
                         },
-                        child: Text(
-                          "Create User",
-                          style: GoogleFonts.mcLaren(
-                              color: Colors.lightBlue[100], fontSize: 18),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Account Create",
+                            style: GoogleFonts.mcLaren(
+                                color: Colors.lightBlue[100], fontSize: 18),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -190,6 +202,9 @@ class _createNewUser extends State<CreateNewUserPage> {
                     children: [
                       InkWell(
                         onTap: () {
+                          URL =
+                              'https://trueaviation.aero/FairEx/api/v1/admin/register';
+                          //'https://10.100.17.47/FairEx/api/v1/admin/register';
                           changeFilter("admin");
                         },
                         child: Text(
@@ -230,13 +245,13 @@ class _createNewUser extends State<CreateNewUserPage> {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     errorText:
-                        _newEmployIDValidate ? 'Value Can\'t Be Empty' : null,
+                        _newEmailIDValidate ? 'Value Can\'t Be Empty' : null,
                     labelText: 'New Employee Email ID* : ',
                     labelStyle: GoogleFonts.mcLaren(
                         fontWeight: FontWeight.bold,
                         color: Colors.lightBlue[100]),
                   ),
-                  obscureText: true,
+                  // /obscureText: true,
                 ),
               ),
             ),
@@ -251,18 +266,17 @@ class _createNewUser extends State<CreateNewUserPage> {
                     ),
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
-                  controller: _phoneNumberController,
+                  controller: _nameController,
                   style: GoogleFonts.mcLaren(color: Colors.lightBlue[100]),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    errorText:
-                        _phoneNumberValidate ? 'Value Can\'t Be Empty' : null,
+                    errorText: _nameValidate ? 'Value Can\'t Be Empty' : null,
                     labelText: 'Name* : ',
                     labelStyle: GoogleFonts.mcLaren(
                         fontWeight: FontWeight.bold,
                         color: Colors.lightBlue[100]),
                   ),
-                  obscureText: true,
+                  //obscureText: true,
                 ),
               ),
             ),
@@ -289,7 +303,7 @@ class _createNewUser extends State<CreateNewUserPage> {
                         fontWeight: FontWeight.bold,
                         color: Colors.lightBlue[100]),
                   ),
-                  obscureText: true,
+                  //obscureText: true,
                 ),
               ),
             ),
@@ -392,53 +406,37 @@ class _createNewUser extends State<CreateNewUserPage> {
                           isLoad = false;
                         });
 
-                        if (_newEmployIDPasswordController.toString() !=
-                            _reNewEmployIDPasswordController.toString()) {
-                          Fluttertoast.showToast(
-                              msg: "Typed Password Don't Match",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.lightBlueAccent,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
+                        newEmailID = _newEmailIDController.toString();
+                        newEmployIDPassword =
+                            _newEmployIDPasswordController.toString();
+                        phoneNumber = _phoneNumberController.toString();
+                        name = _nameController.toString();
+
+                        var response = await createAlbum();
+
+                        //if (response.toLowerCase().trim() == '200') {
+                        if (response.toString() == 'true') {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => new MyHomePage()),
+                              (Route<dynamic> route) => false);
+                        } else {
                           setState(
                             () {
                               isLoad = true;
                             },
                           );
-                        } else {
-                          newEmailID = _newEmailIDController.toString();
-                          newEmployIDPassword =
-                              _newEmployIDPasswordController.toString();
-                          phoneNumber = _phoneNumberController.toString();
-                          name = _nameController.toString();
-
-                          var response = await createAlbum();
-
-                          if (response.toLowerCase().trim() == 'success') {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (context) => new MyHomePage()),
-                                (Route<dynamic> route) => false);
-                          } else {
-                            setState(
-                              () {
-                                isLoad = true;
-                              },
-                            );
-                            Fluttertoast.showToast(
-                                msg: response,
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.TOP,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          }
-
-                          print('MyResponse=>$response');
+                          Fluttertoast.showToast(
+                              msg: response,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         }
+
+                        print('MyResponse=>$response');
                       }
                     }
                   },

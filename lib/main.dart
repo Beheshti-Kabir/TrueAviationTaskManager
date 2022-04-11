@@ -7,18 +7,13 @@ import 'dart:io';
 
 import 'package:true_aviation_task/assignTask.dart';
 import 'package:true_aviation_task/changePassword.dart';
-import 'package:true_aviation_task/checkAvalability.dart';
 import 'package:true_aviation_task/createNewUser.dart';
 import 'package:true_aviation_task/justSubTaskAdd.dart';
 import 'package:true_aviation_task/adminLobby.dart';
 import 'package:true_aviation_task/calender.dart';
 import 'package:true_aviation_task/logInPage.dart';
+import 'package:true_aviation_task/resetPassword.dart';
 import 'package:true_aviation_task/subTaskDetails.dart';
-import 'package:true_aviation_task/todaysTasks.dart';
-import 'package:true_aviation_task/allTasks.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:flutter/material.dart';
 import 'package:true_aviation_task/userLobby.dart';
@@ -55,13 +50,11 @@ class MyApp extends StatelessWidget {
         '/changePassword': (BuildContext context) => ChangePasswordPage(),
         '/createNewUser': (BuildContext context) => CreateNewUserPage(),
         '/calender': (BuildContext context) => CalenderPage(),
-        '/todaysTasks': (BuildContext context) => TodaysTasks(),
-        '/allTasks': (BuildContext context) => AllTasks(),
         '/assignTask': (BuildContext context) => AssignTask(),
-        '/checkAvalability': (BuildContext context) => CheckAvailabilityPage(),
         '/subTaskPage': (BuildContext context) => SubTasksPage(),
         '/justSubTaskPage': (BuildContext context) => JustSubTasksPage(),
-        '/logINPage': (BuildContext context) => LogInPage()
+        '/logINPage': (BuildContext context) => LogInPage(),
+        '/resetPassword': (BuildContext context) => ResetPasswordPage()
         // '/summery': (BuildContext context) => SummeryPage(),
         // '/newlead': (BuildContext context) => NewLead(),
         // '/newleadtransaction': (BuildContext context) => NewLeadTransaction(),

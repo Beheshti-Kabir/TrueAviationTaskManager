@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:true_aviation_task/constants.dart';
-import 'package:true_aviation_task/logInPage.dart';
+import 'package:true_aviation_task/adminLobby.dart';
 import 'package:true_aviation_task/main.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,14 +9,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:true_aviation_task/utils/session_maneger.dart';
 
-class ChangePasswordPage extends StatefulWidget {
+class ResetPasswordPage extends StatefulWidget {
   @override
-  _changePassword createState() {
-    return _changePassword();
+  _resetPassword createState() {
+    return _resetPassword();
   }
 }
 
-class _changePassword extends State<ChangePasswordPage> {
+class _resetPassword extends State<ResetPasswordPage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -25,22 +24,22 @@ class _changePassword extends State<ChangePasswordPage> {
     super.initState();
   }
 
-  final _employID = TextEditingController();
-  final _oldPassword = TextEditingController();
-  final _newPassword = TextEditingController();
-  final _reNewPassword = TextEditingController();
+  final _emailID = TextEditingController();
+  // final _oldPassword = TextEditingController();
+  // final _newPassword = TextEditingController();
+  // final _reNewPassword = TextEditingController();
 
-  bool _employIDValidate = false;
-  bool _oldPasswordValidate = false;
-  bool _newPasswordValidate = false;
-  bool _reNewPasswordValidate = false;
+  bool _emailIDValidate = false;
+  // bool _oldPasswordValidate = false;
+  // bool _newPasswordValidate = false;
+  // bool _reNewPasswordValidate = false;
 
   bool isLoad = true;
 
   String emailID = '';
-  String oldPassword = '';
-  String newPassword = '';
-  String reNewPassword = '';
+  // String oldPassword = '';
+  // String newPassword = '';
+  // String reNewPassword = '';
 
   getEmail() async {
     emailID = await getLocalUserEmailID();
@@ -48,11 +47,11 @@ class _changePassword extends State<ChangePasswordPage> {
   }
 
   formValidator() {
-    String employIDVal = _employID.toString();
-    //String meetDate = _meetDateController.text;
-    String oldPasswordVal = _oldPassword.toString();
-    String newPasswordVal = _newPassword.toString();
-    String reNewpasswordVal = _reNewPassword.toString();
+    String emailIDVal = _emailID.toString();
+    // //String meetDate = _meetDateController.text;
+    // String oldPasswordVal = _oldPassword.toString();
+    // String newPasswordVal = _newPassword.toString();
+    // String reNewpasswordVal = _reNewPassword.toString();
     setState(() {
       // if (employIDVal == null || employIDVal.isEmpty) {
       //   _employIDValidate = true;
@@ -64,26 +63,26 @@ class _changePassword extends State<ChangePasswordPage> {
       // } else {
       //   _oldPasswordValidate = false;
       // }
-      if (newPasswordVal == null || newPasswordVal.isEmpty) {
-        _newPasswordValidate = true;
-      } else {
-        _newPasswordValidate = false;
-      }
-      if (reNewpasswordVal == null || reNewpasswordVal.isEmpty) {
-        _reNewPasswordValidate = true;
-      } else {
-        _reNewPasswordValidate = false;
-      }
+      // if (newPasswordVal == null || newPasswordVal.isEmpty) {
+      //   _newPasswordValidate = true;
+      // } else {
+      //   _newPasswordValidate = false;
+      // }
+      // if (reNewpasswordVal == null || reNewpasswordVal.isEmpty) {
+      //   _reNewPasswordValidate = true;
+      // } else {
+      //   _reNewPasswordValidate = false;
+      // }
       // if (meetDate == null || meet_date.isEmpty) {
       //   _meetDateVaidate = true;
       // } else {
       //   _meetDateVaidate = false;
       // }
     });
-    if (
-        // !_employIDValidate &&
-        //   !_oldPasswordValidate &&
-        !_newPasswordValidate && !_reNewPasswordValidate) {
+    if (!_emailIDValidate
+        //  && !_oldPasswordValidate &&
+        //!_newPasswordValidate && !_reNewPasswordValidate
+        ) {
       return true;
     } else {
       return false;
@@ -105,7 +104,7 @@ class _changePassword extends State<ChangePasswordPage> {
           //'new_lead_transaction': jsonEncode(<String, String>{
           //'username': employID,
           'email': emailID,
-          'password': newPassword
+          'password': '123456'
         }
             // ),}
 
@@ -113,7 +112,7 @@ class _changePassword extends State<ChangePasswordPage> {
     var responsee = json.decode(response.body)['status'];
     if (response.statusCode == 200) {
       if (responsee.toString().toLowerCase().trim() == 'fail') {
-        return 'Issue. Communicate Admin';
+        return 'Email ID Does Not Exist';
       } else {
         return json.decode(response.body)['status'].toString();
       }
@@ -138,16 +137,16 @@ class _changePassword extends State<ChangePasswordPage> {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Change Password',
+                  'Reset Password',
                   style: GoogleFonts.mcLaren(
                     fontSize: 35.0,
-                    color: Colors.red[100],
+                    color: Colors.orange[100],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               alignment: Alignment.center,
-              color: Colors.red[600],
+              color: Colors.orange[600],
               height: 100.0,
               width: MediaQuery.of(context).size.width,
             ),
@@ -158,21 +157,21 @@ class _changePassword extends State<ChangePasswordPage> {
             //       padding: EdgeInsets.only(left:5.0),
             //       decoration: BoxDecoration(
             //                         border: Border.all(
-            //                           color: Colors.redAccent,
+            //                           color: Colors.orangeAccent,
             //                           width: 3.0,
             //                         ),
             //                         borderRadius: BorderRadius.circular(10)),
             //         child:
             //           TextField(
             //             controller: _employID,
-            //             style: GoogleFonts.mcLaren(color: Colors.red[100]),
+            //             style: GoogleFonts.mcLaren(color: Colors.orange[100]),
             //             decoration: InputDecoration(
             //                border: InputBorder.none,
             //               errorText:
             //                   _employIDValidate ? 'Value Can\'t Be Empty' : null,
             //               labelText: 'EmployID* : ',
             //               labelStyle: GoogleFonts.mcLaren(
-            //                   fontWeight: FontWeight.bold, color: Colors.red[100]),
+            //                   fontWeight: FontWeight.bold, color: Colors.orange[100]),
 
             //             ),
 
@@ -180,20 +179,44 @@ class _changePassword extends State<ChangePasswordPage> {
             //         ,),
 
             //   ),
-
             Padding(
               padding: const EdgeInsets.only(top: 40, left: 10.0, right: 10.0),
               child: Container(
                 padding: EdgeInsets.only(left: 5.0),
                 decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.redAccent,
+                      color: Colors.orangeAccent,
                       width: 3.0,
                     ),
                     borderRadius: BorderRadius.circular(10)),
-                child: Text('EmailId : $emailID',
+                child: TextField(
+                  controller: _emailID,
+                  style: GoogleFonts.mcLaren(color: Colors.orange[100]),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    errorText:
+                        _emailIDValidate ? 'Value Can\'t Be Empty' : null,
+                    labelText: 'Email ID* : ',
+                    labelStyle: GoogleFonts.mcLaren(
+                        fontWeight: FontWeight.bold, color: Colors.orange[100]),
+                  ),
+                  // /obscureText: true,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
+              child: Container(
+                padding: EdgeInsets.only(left: 5.0),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.orangeAccent,
+                      width: 3.0,
+                    ),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Text('Password : 123456',
                     style: GoogleFonts.mcLaren(
-                      color: Colors.red[100],
+                      color: Colors.orange[100],
                       fontSize: 18,
                     )),
                 height: 60,
@@ -208,76 +231,51 @@ class _changePassword extends State<ChangePasswordPage> {
             //     padding: EdgeInsets.only(left: 5.0),
             //     decoration: BoxDecoration(
             //         border: Border.all(
-            //           color: Colors.redAccent,
+            //           color: Colors.orangeAccent,
             //           width: 3.0,
             //         ),
             //         borderRadius: BorderRadius.circular(10)),
             //     child: TextField(
             //       controller: _oldPassword,
-            //       style: GoogleFonts.mcLaren(color: Colors.red[100]),
+            //       style: GoogleFonts.mcLaren(color: Colors.orange[100]),
             //       decoration: InputDecoration(
             //         border: InputBorder.none,
             //         errorText:
             //             _oldPasswordValidate ? 'Value Can\'t Be Empty' : null,
             //         labelText: 'Old Password* : ',
             //         labelStyle: GoogleFonts.mcLaren(
-            //             fontWeight: FontWeight.bold, color: Colors.red[100]),
+            //             fontWeight: FontWeight.bold, color: Colors.orange[100]),
             //       ),
             //       obscureText: true,
             //     ),
             //   ),
             // ),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
-              child: Container(
-                padding: EdgeInsets.only(left: 5.0),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.redAccent,
-                      width: 3.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  controller: _newPassword,
-                  style: GoogleFonts.mcLaren(color: Colors.red[100]),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    errorText:
-                        _newPasswordValidate ? 'Value Can\'t Be Empty' : null,
-                    labelText: 'New Password* : ',
-                    labelStyle: GoogleFonts.mcLaren(
-                        fontWeight: FontWeight.bold, color: Colors.red[100]),
-                  ),
-                  obscureText: true,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
-              child: Container(
-                padding: EdgeInsets.only(left: 5.0),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.redAccent,
-                      width: 3.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  controller: _reNewPassword,
-                  style: GoogleFonts.mcLaren(color: Colors.red[100]),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    errorText:
-                        _reNewPasswordValidate ? 'Value Can\'t Be Empty' : null,
-                    labelText: 'Re-type New Password* : ',
-                    labelStyle: GoogleFonts.mcLaren(
-                        fontWeight: FontWeight.bold, color: Colors.red[100]),
-                  ),
-                  obscureText: true,
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
+            //   child: Container(
+            //     padding: EdgeInsets.only(left: 5.0),
+            //     decoration: BoxDecoration(
+            //         border: Border.all(
+            //           color: Colors.orangeAccent,
+            //           width: 3.0,
+            //         ),
+            //         borderRadius: BorderRadius.circular(10)),
+            //     child: TextField(
+            //       controller: _reNewPassword,
+            //       style: GoogleFonts.mcLaren(color: Colors.orange[100]),
+            //       decoration: InputDecoration(
+            //         border: InputBorder.none,
+            //         errorText:
+            //             _reNewPasswordValidate ? 'Value Can\'t Be Empty' : null,
+            //         labelText: 'Re-type New Password* : ',
+            //         labelStyle: GoogleFonts.mcLaren(
+            //             fontWeight: FontWeight.bold, color: Colors.orange[100]),
+            //       ),
+            //       obscureText: true,
+            //     ),
+            //   ),
+            // ),
 
             SizedBox(height: 40.0),
             // save
@@ -285,8 +283,8 @@ class _changePassword extends State<ChangePasswordPage> {
               child: Center(
                 child: GestureDetector(
                   onTap: () async {
-                    isLoad = true;
                     if (isLoad) {
+                      //isLoad = true;
                       bool isValid = formValidator();
                       if (isValid) {
                         Fluttertoast.showToast(
@@ -294,7 +292,7 @@ class _changePassword extends State<ChangePasswordPage> {
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.TOP,
                             timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.redAccent,
+                            backgroundColor: Colors.orangeAccent,
                             textColor: Colors.white,
                             fontSize: 16.0);
 
@@ -302,53 +300,35 @@ class _changePassword extends State<ChangePasswordPage> {
                           isLoad = false;
                         });
 
-                        if (_newPassword.text != _reNewPassword.text) {
-                          Fluttertoast.showToast(
-                              msg: "Typed Password Don't Match",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.redAccent,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
+                        //employID = _employID.text;
+                        //oldPassword = _oldPassword.text;
+                        emailID = _emailID.text;
+
+                        var response = await createAlbum();
+
+                        if (response.toString().toLowerCase().trim() ==
+                            'true') {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => new LobbyPage()),
+                              (Route<dynamic> route) => false);
+                        } else {
                           setState(
                             () {
                               isLoad = true;
                             },
                           );
-                        } else {
-                          //employID = _employID.text;
-                          //oldPassword = _oldPassword.text;
-                          newPassword = _newPassword.text;
-
-                          var response = await createAlbum();
-
-                          if (response.toString().toLowerCase().trim() ==
-                              'true') {
-                            storeLocalSetLogInStatus(
-                                Constants.logInStatusKey, 'false');
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (context) => new MyHomePage()),
-                                (Route<dynamic> route) => false);
-                          } else {
-                            setState(
-                              () {
-                                isLoad = true;
-                              },
-                            );
-                            Fluttertoast.showToast(
-                                msg: response,
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.TOP,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.redAccent,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          }
-
-                          print('MyResponse=>$response');
+                          Fluttertoast.showToast(
+                              msg: response,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.orangeAccent,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         }
+
+                        print('MyResponse=>$response');
                       }
                     }
                   },
@@ -357,14 +337,14 @@ class _changePassword extends State<ChangePasswordPage> {
                     width: 150.0,
                     child: Material(
                       borderRadius: BorderRadius.circular(20.0),
-                      shadowColor: Colors.red[600],
-                      color: Colors.red[600],
+                      shadowColor: Colors.orange[600],
+                      color: Colors.orange[600],
                       elevation: 7.0,
                       child: Center(
                         child: Text(
                           "Save Change",
                           style: TextStyle(
-                              color: Colors.red[100],
+                              color: Colors.orange[100],
                               fontWeight: FontWeight.bold),
                         ),
                       ),

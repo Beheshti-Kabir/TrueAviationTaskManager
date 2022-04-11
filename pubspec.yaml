@@ -50,6 +50,7 @@ dependencies:
   table_calendar: ^3.0.3
   flutter_slidable: ^1.2.0
   dropdown_button2: ^1.1.1
+  url_launcher: ^6.0.20
   #geolocator: ^8.0.1
   #location: ^4.3.0 
   shared_preferences: ^2.0.13
