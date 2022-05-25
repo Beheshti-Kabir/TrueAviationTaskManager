@@ -11,80 +11,72 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:true_aviation_task/modelSubTasks.dart';
 import 'package:true_aviation_task/utils/session_maneger.dart';
 
-class CustomPicker extends CommonPickerModel {
-  String digits(int value, int length) {
-    return '$value'.padLeft(length, "0");
-  }
-
-  CustomPicker({DateTime? currentTime, LocaleType? locale})
-      : super(locale: locale) {
-    this.currentTime = currentTime ?? DateTime.now();
-    this.setLeftIndex(this.currentTime.hour);
-    this.setMiddleIndex(this.currentTime.minute);
-    this.setRightIndex(this.currentTime.second);
-  }
-
-  @override
-  String? leftStringAtIndex(int index) {
-    if (index >= 0 && index < 24) {
-      return this.digits(index, 2);
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  String? middleStringAtIndex(int index) {
-    if (index >= 0 && index < 60) {
-      return this.digits(index, 2);
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  String? rightStringAtIndex(int index) {
-    if (index >= 0 && index < 60) {
-      return this.digits(index, 2);
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  String leftDivider() {
-    return "|";
-  }
-
-  @override
-  String rightDivider() {
-    return "|";
-  }
-
-  @override
-  List<int> layoutProportions() {
-    return [1, 2, 1];
-  }
-
-  @override
-  DateTime finalTime() {
-    return currentTime.isUtc
-        ? DateTime.utc(
-            currentTime.year,
-            currentTime.month,
-            currentTime.day,
-            this.currentLeftIndex(),
-            this.currentMiddleIndex(),
-            this.currentRightIndex())
-        : DateTime(
-            currentTime.year,
-            currentTime.month,
-            currentTime.day,
-            this.currentLeftIndex(),
-            this.currentMiddleIndex(),
-            this.currentRightIndex());
-  }
-}
+// class CustomPicker extends CommonPickerModel {
+//   String digits(int value, int length) {
+//     return '$value'.padLeft(length, "0");
+//   }
+//   CustomPicker({DateTime? currentTime, LocaleType? locale})
+//       : super(locale: locale) {
+//     this.currentTime = currentTime ?? DateTime.now();
+//     this.setLeftIndex(this.currentTime.hour);
+//     this.setMiddleIndex(this.currentTime.minute);
+//     this.setRightIndex(this.currentTime.second);
+//   }
+//   @override
+//   String? leftStringAtIndex(int index) {
+//     if (index >= 0 && index < 24) {
+//       return this.digits(index, 2);
+//     } else {
+//       return null;
+//     }
+//   }
+//   @override
+//   String? middleStringAtIndex(int index) {
+//     if (index >= 0 && index < 60) {
+//       return this.digits(index, 2);
+//     } else {
+//       return null;
+//     }
+//   }
+//   @override
+//   String? rightStringAtIndex(int index) {
+//     if (index >= 0 && index < 60) {
+//       return this.digits(index, 2);
+//     } else {
+//       return null;
+//     }
+//   }
+//   @override
+//   String leftDivider() {
+//     return "|";
+//   }
+//   @override
+//   String rightDivider() {
+//     return "|";
+//   }
+//   @override
+//   List<int> layoutProportions() {
+//     return [1, 2, 1];
+//   }
+//   @override
+//   DateTime finalTime() {
+//     return currentTime.isUtc
+//         ? DateTime.utc(
+//             currentTime.year,
+//             currentTime.month,
+//             currentTime.day,
+//             this.currentLeftIndex(),
+//             this.currentMiddleIndex(),
+//             this.currentRightIndex())
+//         : DateTime(
+//             currentTime.year,
+//             currentTime.month,
+//             currentTime.day,
+//             this.currentLeftIndex(),
+//             this.currentMiddleIndex(),
+//             this.currentRightIndex());
+//   }
+// }
 
 class AssignTask extends StatefulWidget {
   @override
@@ -225,7 +217,7 @@ class _assignTask extends State<AssignTask> {
   }
 
   Future<String> createAlbum() async {
-    taskDate = _taskDateController.toString();
+    //taskDate = _taskDateController.toString();
     taskTitle = _taskTitleController.text;
     String token = await getLocalToken();
     print('task =>' + taskTitle);
@@ -239,7 +231,7 @@ class _assignTask extends State<AssignTask> {
         },
         body: jsonEncode(<String, String>{
           'title': taskTitle,
-          'time': taskDate,
+          //'time': taskDate,
           'status': 'Not Touched'
           //'newPassword': newPassword
         }
@@ -346,58 +338,56 @@ class _assignTask extends State<AssignTask> {
                 ),
               ),
 
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
-                child: Container(
-                  padding: EdgeInsets.only(left: 5.0),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.lightGreenAccent,
-                        width: 3.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: TextButton(
-                    onPressed: () {
-                      DatePicker.showDatePicker(context, showTitleActions: true,
-                          //     onChanged: (date) {
-                          //   print('change $date in time zone ' +
-                          //       date.timeZoneOffset.inHours.toString());
-                          // },
-                          onConfirm: (date) {
-                        print('confirm meating date $date');
-                        taskDate.toString();
-
-                        var taskDate_day = date.day.toInt() < 10
-                            ? '0' + date.day.toString()
-                            : date.day.toString();
-                        var taskDate_month = date.month.toInt() < 10
-                            ? '0' + date.month.toString()
-                            : date.month.toString();
-
-                        setState(() {
-                          _taskDateController = date.year.toString() +
-                              '-' +
-                              taskDate_month.toString() +
-                              '-' +
-                              taskDate_day.toString();
-                        });
-                      }, currentTime: DateTime.now());
-                    },
-                    child: Text(
-                      "Task Date* : $_taskDateController",
-                      style: GoogleFonts.mcLaren(
-                          fontSize: 17,
-                          color: Colors.lightGreen[100],
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  alignment: Alignment.topLeft,
-                ),
-              ),
               // Padding(
+              //   padding:
+              //       const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
+              //   child: Container(
+              //     padding: EdgeInsets.only(left: 5.0),
+              //     width: double.infinity,
+              //     decoration: BoxDecoration(
+              //         border: Border.all(
+              //           color: Colors.lightGreenAccent,
+              //           width: 3.0,
+              //         ),
+              //         borderRadius: BorderRadius.circular(10)),
+              //     child: TextButton(
+              //       onPressed: () {
+              //         DatePicker.showDatePicker(context, showTitleActions: true,
+              //             //     onChanged: (date) {
+              //             //   print('change $date in time zone ' +
+              //             //       date.timeZoneOffset.inHours.toString());
+              //             // },
+              //             onConfirm: (date) {
+              //           print('confirm meating date $date');
+              //           taskDate.toString();
+              //           var taskDate_day = date.day.toInt() < 10
+              //               ? '0' + date.day.toString()
+              //               : date.day.toString();
+              //           var taskDate_month = date.month.toInt() < 10
+              //               ? '0' + date.month.toString()
+              //               : date.month.toString();
+              //           setState(() {
+              //             _taskDateController = date.year.toString() +
+              //                 '-' +
+              //                 taskDate_month.toString() +
+              //                 '-' +
+              //                 taskDate_day.toString();
+              //           });
+              //         }, currentTime: DateTime.now());
+              //       },
+              //       child: Text(
+              //         "Task Date* : $_taskDateController",
+              //         style: GoogleFonts.mcLaren(
+              //             fontSize: 17,
+              //             color: Colors.lightGreen[100],
+              //             fontWeight: FontWeight.bold),
+              //         textAlign: TextAlign.left,
+              //       ),
+              //     ),
+              //     alignment: Alignment.topLeft,
+              //   ),
+              // ),
+              // // Padding(
               //   padding:
               //       const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
               //   child: Container(

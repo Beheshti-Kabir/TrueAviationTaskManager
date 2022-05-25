@@ -20,7 +20,7 @@ class _LogINPageState extends State<LogInPage> {
   bool _passwordValidate = false;
   String filterType = "user";
   //String URL = 'https://10.100.17.234/FairEx/api/v1/user/login';
-  String URL = 'https://trueaviation.aero/FairEx/api/v1/user/login';
+  String URL = 'http://trueaviation.aero/FairEx/api/v1/user/login';
   String email = '';
   String password = '';
   String token = '';
@@ -67,10 +67,18 @@ class _LogINPageState extends State<LogInPage> {
     storeLocalSetUserEmailID(Constants.userEmailKey, emailID);
     storeLocalSetAccessToken(Constants.accessTokenKey, token);
     storeLocalSetUserType(Constants.userTypeKey, userType);
-
+    Fluttertoast.showToast(
+        msg: "Logged In",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.green[100],
+        fontSize: 16.0);
     storeLocalSetLogInStatus(Constants.logInStatusKey, 'true');
     print('$userName $emailID  $userType $token');
     message = 'Logging In';
+
     Navigator.of(context).pushNamed(route);
   }
 
@@ -104,10 +112,24 @@ class _LogINPageState extends State<LogInPage> {
         setData();
         message = 'Logging In';
       } else {
-        message = 'EmployID & Password Don\'t Match';
+        Fluttertoast.showToast(
+            msg: "Email ID & Password Don\'t Match..",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.green[100],
+            fontSize: 16.0);
       }
     } else {
-      message = 'Server issues';
+      Fluttertoast.showToast(
+          msg: "Server Issue..",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.green[100],
+          fontSize: 16.0);
     }
     return 'nothing';
   }
@@ -125,7 +147,7 @@ class _LogINPageState extends State<LogInPage> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 150.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
                     child: Text(
                       'True',
                       style: GoogleFonts.mcLaren(
@@ -146,7 +168,7 @@ class _LogINPageState extends State<LogInPage> {
                   // ),
 
                   Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 215.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(20.0, 175.0, 0.0, 0.0),
                     child: Text(
                       'Aviation',
                       style: GoogleFonts.mcLaren(
@@ -156,7 +178,7 @@ class _LogINPageState extends State<LogInPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 310.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(20.0, 270.0, 0.0, 0.0),
                     child: Text(
                       'Task',
                       style: GoogleFonts.mcLaren(
@@ -166,7 +188,7 @@ class _LogINPageState extends State<LogInPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 350.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(20.0, 310.0, 0.0, 0.0),
                     child: Text(
                       'Manager',
                       style: GoogleFonts.mcLaren(
@@ -194,7 +216,7 @@ class _LogINPageState extends State<LogInPage> {
                         onTap: () {
                           URL =
                               //'https://10.100.17.234/FairEx/api/v1/user/login';
-                              'https://trueaviation.aero/FairEx/api/v1/user/login';
+                              'http://trueaviation.aero/FairEx/api/v1/user/login';
                           route = '/userLobby';
                           userType = 'user';
                           changeFilter("user");
@@ -235,7 +257,7 @@ class _LogINPageState extends State<LogInPage> {
                         onTap: () {
                           URL =
                               //'https://10.100.17.234/FairEx/api/v1/admin/login';
-                              'https://trueaviation.aero/FairEx/api/v1/admin/login';
+                              'http://trueaviation.aero/FairEx/api/v1/admin/login';
                           route = '/lobby';
                           userType = 'admin';
                           changeFilter("admin");
@@ -254,7 +276,7 @@ class _LogINPageState extends State<LogInPage> {
                           //     ? Colors.greenAccent
                           //     : Colors.white,
                           child: Text(
-                            "I an Admin",
+                            "I am Admin",
                             style: GoogleFonts.mcLaren(
                                 color: (filterType == "admin")
                                     ? Colors.white

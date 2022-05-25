@@ -35,7 +35,7 @@ class _userLobbyPage extends State<UserLobbyPage> {
   String emailID = '';
 
   getUserInfo() async {
-    userName = await getLocalUserName();
+    userName = Constants.name;
     emailID = await getLocalUserEmailID();
   }
 
@@ -122,7 +122,7 @@ class _userLobbyPage extends State<UserLobbyPage> {
                       children: <Widget>[
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed('/calender');
+                            Navigator.of(context).pushNamed('/userCalender');
                           },
                           child: SizedBox(
                             height: buttonHeight,

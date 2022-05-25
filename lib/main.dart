@@ -7,15 +7,17 @@ import 'dart:io';
 
 import 'package:true_aviation_task/assignTask.dart';
 import 'package:true_aviation_task/changePassword.dart';
+import 'package:true_aviation_task/constants.dart';
 import 'package:true_aviation_task/createNewUser.dart';
 import 'package:true_aviation_task/justSubTaskAdd.dart';
 import 'package:true_aviation_task/adminLobby.dart';
-import 'package:true_aviation_task/calender.dart';
+import 'package:true_aviation_task/adminCalender.dart';
 import 'package:true_aviation_task/logInPage.dart';
 import 'package:true_aviation_task/resetPassword.dart';
 import 'package:true_aviation_task/subTaskDetails.dart';
 
 import 'package:flutter/material.dart';
+import 'package:true_aviation_task/userCalender.dart';
 import 'package:true_aviation_task/userLobby.dart';
 import 'package:true_aviation_task/utils/session_maneger.dart';
 
@@ -49,7 +51,8 @@ class MyApp extends StatelessWidget {
         '/userLobby': (BuildContext context) => UserLobbyPage(),
         '/changePassword': (BuildContext context) => ChangePasswordPage(),
         '/createNewUser': (BuildContext context) => CreateNewUserPage(),
-        '/calender': (BuildContext context) => CalenderPage(),
+        '/adminCalender': (BuildContext context) => AdminCalenderPage(),
+        '/userCalender': (BuildContext context) => UserCalenderPage(),
         '/assignTask': (BuildContext context) => AssignTask(),
         '/subTaskPage': (BuildContext context) => SubTasksPage(),
         '/justSubTaskPage': (BuildContext context) => JustSubTasksPage(),
@@ -85,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print('status=> ' + logINStatus.toString());
     String userType = await getLocalUserTpe();
     print('type=> ' + userType);
+    Constants.name = await getLocalUserName();
     if (logINStatus) {
       if (userType == 'admin') {
         route = '/lobby';

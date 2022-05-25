@@ -110,6 +110,7 @@ class _SubTasksPageState extends State<SubTasksPage> {
 
   String subTask = '';
   String _taskTimeController = '';
+  String _taskDateController = '';
 
   List<Todo2> detailsTable = [];
   var icnSize = 18.0;
@@ -118,28 +119,42 @@ class _SubTasksPageState extends State<SubTasksPage> {
 
   late Todo2 detailsModel;
 
-  bool _quantityValidate = false;
+  bool _taskTimeValidate = false;
+  bool _taskDateValidate = false;
   bool _subTaskValidate = false;
   var taskTime = '';
+  var taskDate = '';
   bool isLoad = true;
   String taskID = '';
 
   void clearController() {
     _subTaskController.clear();
     _taskTimeController = '';
+    _taskDateController = '';
   }
 
   formValidator() {
     String subTaskValidation = _subTaskController.text;
-
+    String taskDateValidation = _taskDateController.toString();
+    String taskTimeValidation = _taskTimeController.toString();
     setState(() {
       if (subTaskValidation == null || subTaskValidation.isEmpty) {
         _subTaskValidate = true;
       } else {
         _subTaskValidate = false;
       }
+      if (taskTimeValidation == null || taskTimeValidation.isEmpty) {
+        _taskTimeValidate = true;
+      } else {
+        _taskTimeValidate = false;
+      }
+      if (taskDateValidation == null || taskDateValidation.isEmpty) {
+        _taskDateValidate = true;
+      } else {
+        _taskDateValidate = false;
+      }
     });
-    if (!_subTaskValidate) {
+    if (!_subTaskValidate && !_taskDateValidate && !_taskTimeValidate) {
       return true;
     } else {
       return false;
@@ -166,6 +181,7 @@ class _SubTasksPageState extends State<SubTasksPage> {
 
         subTask = _subTaskController.text;
         taskTime = _taskTimeController.toString();
+        taskDate = _taskDateController.toString();
 
         var response = await createAlbum();
 
@@ -178,7 +194,8 @@ class _SubTasksPageState extends State<SubTasksPage> {
               backgroundColor: Colors.lightGreenAccent,
               textColor: Colors.white,
               fontSize: 16.0);
-          detailsModel = Todo2(subTasks: subTask, time: taskTime);
+          detailsModel =
+              Todo2(subTasks: subTask, time: taskTime, date: taskDate);
           detailsTable.add(detailsModel);
           clearController();
           setState(() {});
@@ -218,7 +235,8 @@ class _SubTasksPageState extends State<SubTasksPage> {
           'task_id': taskID,
           'title': subTask,
           'time': taskTime,
-          'status': '0'
+          'status': '0',
+          'date': taskDate
           //'newPassword': newPassword
         }
             // ),}
@@ -288,12 +306,61 @@ class _SubTasksPageState extends State<SubTasksPage> {
                       border: InputBorder.none,
                       errorText:
                           _subTaskValidate ? 'Value Can\'t Be Empty' : null,
-                      labelText: 'Sub Task* : ',
+                      labelText: 'Sub Task Title* : ',
                       labelStyle: GoogleFonts.mcLaren(
                           fontWeight: FontWeight.bold,
                           color: Colors.lightGreen[100]),
                     ),
                   ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 10, left: 10.0, right: 10.0),
+                child: Container(
+                  padding: EdgeInsets.only(left: 5.0),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.lightGreenAccent,
+                        width: 3.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: TextButton(
+                    onPressed: () {
+                      DatePicker.showDatePicker(context, showTitleActions: true,
+                          //     onChanged: (date) {
+                          //   print('change $date in time zone ' +
+                          //       date.timeZoneOffset.inHours.toString());
+                          // },
+                          onConfirm: (date) {
+                        print('confirm meating date $date');
+                        taskDate.toString();
+                        var taskDateDay = date.day.toInt() < 10
+                            ? '0' + date.day.toString()
+                            : date.day.toString();
+                        var taskDateMonth = date.month.toInt() < 10
+                            ? '0' + date.month.toString()
+                            : date.month.toString();
+                        setState(() {
+                          _taskDateController = date.year.toString() +
+                              '-' +
+                              taskDateMonth.toString() +
+                              '-' +
+                              taskDateDay.toString();
+                        });
+                      }, currentTime: DateTime.now());
+                    },
+                    child: Text(
+                      "Sub Task Date* : $_taskDateController",
+                      style: GoogleFonts.mcLaren(
+                          fontSize: 17,
+                          color: Colors.lightGreen[100],
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  alignment: Alignment.topLeft,
                 ),
               ),
               Padding(
@@ -322,22 +389,20 @@ class _SubTasksPageState extends State<SubTasksPage> {
                         var startTimeMinute = date.minute.toInt() < 10
                             ? '0' + date.minute.toString()
                             : date.minute.toString();
-                        var antiPost = date.hour.toInt() < 12 ? 'AM' : 'PM';
-                        var startTimeHour = date.hour.toInt() > 12
-                            ? (date.hour - 12).toString()
-                            : date.hour.toString();
+                        // var antiPost = date.hour.toInt() < 12 ? 'AM' : 'PM';
+                        // var startTimeHour = date.hour.toInt() > 12
+                        //     ? (date.hour - 12).toString()
+                        //     : date.hour.toString();
 
                         setState(() {
-                          _taskTimeController = startTimeHour.toString() +
+                          _taskTimeController = date.hour.toString() +
                               ':' +
-                              startTimeMinute.toString() +
-                              ' ' +
-                              antiPost;
+                              startTimeMinute.toString();
                         });
                       }, currentTime: DateTime.now());
                     },
                     child: Text(
-                      "Task Time* : $_taskTimeController",
+                      "Sub Task Time* : $_taskTimeController",
                       style: GoogleFonts.mcLaren(
                           fontSize: 17,
                           color: Colors.lightGreen[100],
@@ -361,6 +426,7 @@ class _SubTasksPageState extends State<SubTasksPage> {
                         count += 1;
                         subTask = _subTaskController.text;
                         taskTime = _taskTimeController.toString();
+                        taskDate = _taskDateController.toString();
                         print(subTask + ' => ' + taskTime);
 
                         saveSubTaskData();
@@ -444,6 +510,16 @@ class _SubTasksPageState extends State<SubTasksPage> {
                     ),
                     Expanded(
                       child: Text(
+                        'Date',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.mcLaren(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.lightGreen[100]),
+                      ),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      child: Text(
                         'Time',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.mcLaren(
@@ -479,6 +555,16 @@ class _SubTasksPageState extends State<SubTasksPage> {
                           Expanded(
                             child: Text(
                               model.subTasks.toString(),
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.mcLaren(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightGreen[100]),
+                            ),
+                            flex: 1,
+                          ),
+                          Expanded(
+                            child: Text(
+                              model.date.toString(),
                               textAlign: TextAlign.center,
                               style: GoogleFonts.mcLaren(
                                   fontWeight: FontWeight.bold,

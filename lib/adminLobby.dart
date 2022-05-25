@@ -43,7 +43,7 @@ class _lobbyPage extends State<LobbyPage> {
   }
 
   getUserInfo() async {
-    userName = await getLocalUserName();
+    userName = Constants.name;
     emailID = await getLocalUserEmailID();
   }
 
@@ -234,7 +234,7 @@ class _lobbyPage extends State<LobbyPage> {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/calender');
+                              Navigator.of(context).pushNamed('/adminCalender');
                             },
                             child: SizedBox(
                               height: buttonHeight,
@@ -246,7 +246,7 @@ class _lobbyPage extends State<LobbyPage> {
                                 elevation: 7.0,
                                 child: Center(
                                   child: Text(
-                                    'Calendar & Tasks',
+                                    'Calendar & Sub-Tasks',
                                     style: GoogleFonts.mcLaren(
                                       fontSize: textSize,
                                       color: Colors.yellow[100],
@@ -330,7 +330,44 @@ class _lobbyPage extends State<LobbyPage> {
                     //     ],
                     //   ),
                     // ),
-
+                    Container(
+                      padding: EdgeInsets.only(top: 20),
+                      //padding: EdgeInsets.fromLTRB(
+                      // (MediaQuery.of(context).size.width * 0.45) -
+                      //     (buttonWidth / 2),
+                      // 40.0,
+                      // 20.0,
+                      // 0.0),
+                      child: Stack(
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/adminTask');
+                            },
+                            child: SizedBox(
+                              height: buttonHeight,
+                              width: buttonWidth,
+                              child: Material(
+                                borderRadius: BorderRadius.circular(35.0),
+                                shadowColor: Colors.amberAccent,
+                                color: Colors.amberAccent[400],
+                                elevation: 7.0,
+                                child: Center(
+                                  child: Text(
+                                    'All Tasks',
+                                    style: GoogleFonts.mcLaren(
+                                      fontSize: textSize,
+                                      color: Colors.yellow[100],
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.only(top: 40),
                       // padding: EdgeInsets.fromLTRB(

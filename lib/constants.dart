@@ -1,5 +1,6 @@
 class Constants {
   static String employeeId = '';
+  static String name = '';
 
   static String taskID = '';
 
