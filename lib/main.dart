@@ -3,8 +3,10 @@
 //import 'dart:ffi';
 //import 'dart:ui';
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:true_aviation_task/assignTask.dart';
 import 'package:true_aviation_task/changePassword.dart';
 import 'package:true_aviation_task/constants.dart';
@@ -17,9 +19,14 @@ import 'package:true_aviation_task/resetPassword.dart';
 import 'package:true_aviation_task/subTaskDetails.dart';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:true_aviation_task/adminTask.dart';
+import 'package:true_aviation_task/upgradePage.dart';
 import 'package:true_aviation_task/userCalender.dart';
 import 'package:true_aviation_task/userLobby.dart';
+import 'package:true_aviation_task/userTask.dart';
 import 'package:true_aviation_task/utils/session_maneger.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //void main() => runApp(MyApp());
 
@@ -57,7 +64,10 @@ class MyApp extends StatelessWidget {
         '/subTaskPage': (BuildContext context) => SubTasksPage(),
         '/justSubTaskPage': (BuildContext context) => JustSubTasksPage(),
         '/logINPage': (BuildContext context) => LogInPage(),
-        '/resetPassword': (BuildContext context) => ResetPasswordPage()
+        '/resetPassword': (BuildContext context) => ResetPasswordPage(),
+        '/adminTask': (BuildContext context) => AdminTaskViewPage(),
+        '/userTask': (BuildContext context) => UserTaskViewPage(),
+        '/upgradePage': (BuildContext context) => UpgradePage(),
         // '/summery': (BuildContext context) => SummeryPage(),
         // '/newlead': (BuildContext context) => NewLead(),
         // '/newleadtransaction': (BuildContext context) => NewLeadTransaction(),
@@ -79,8 +89,49 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     getRoutePath();
-    Timer(Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacementNamed(route));
+    // Timer(Duration(seconds: 3),
+    //     () =>
+    //      Navigator.of(context).pushReplacementNamed(route));
+  }
+
+  getVersion() async {
+    final response = await http.get(
+      Uri.parse('https://trueaviation.aero/FairEx/api/v1/meet/virsion'),
+      //Uri.parse('http://10.100.18.167:8090/rbd/leadInfoApi/getProductList'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+    var versionJSON = jsonDecode(response.body);
+    print(response.statusCode.toString());
+
+    String version = versionJSON['virsion'].toString();
+    String versionCount = versionJSON['versionCount'].toString();
+    Constants.upgradeURL = versionJSON['url'].toString();
+
+    print(version.toString());
+
+    if (response.statusCode.toString() == '200') {
+      if (version != Constants.version) {
+        Navigator.of(context).pushReplacementNamed('/upgradePage');
+      } else {
+        Navigator.of(context).pushReplacementNamed(route);
+      }
+    } else {
+      Fluttertoast.showToast(
+          msg: "You Don\'t Have Internet Connection",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.lightGreenAccent,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+
+    ///logic for version check & create url for the upgrade throw play store
+    ///pop up for no internet connection
+    ///pop up for upgrade
   }
 
   getRoutePath() async {
@@ -98,6 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       route = '/logINPage';
     }
+    await getVersion();
   }
 
   @override

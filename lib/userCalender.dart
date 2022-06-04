@@ -269,7 +269,8 @@ class _userCalender extends State<UserCalenderPage> {
                                   flex: 2,
                                   child: Column(
                                     children: <Widget>[
-                                      Text('Task Title',
+                                      Text('Sub Task Title',
+                                          textAlign: TextAlign.center,
                                           style: GoogleFonts.mcLaren(
                                               color: Colors.pinkAccent,
                                               fontWeight: FontWeight.bold)),
@@ -280,7 +281,7 @@ class _userCalender extends State<UserCalenderPage> {
                                   flex: 2,
                                   child: Column(
                                     children: <Widget>[
-                                      Text('Sub Task Title',
+                                      Text('Task Title',
                                           style: GoogleFonts.mcLaren(
                                               color: Colors.pinkAccent,
                                               fontWeight: FontWeight.bold)),
@@ -292,6 +293,7 @@ class _userCalender extends State<UserCalenderPage> {
                                   child: Column(
                                     children: <Widget>[
                                       Text('Sub Task Time',
+                                          textAlign: TextAlign.center,
                                           style: GoogleFonts.mcLaren(
                                               color: Colors.pinkAccent,
                                               fontWeight: FontWeight.bold)),
@@ -598,10 +600,13 @@ class _userCalender extends State<UserCalenderPage> {
                                         Expanded(
                                           flex: 2,
                                           child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Center(
                                                 child: Text(
-                                                  taskTitle[index],
+                                                  subTaskTitleList[index],
+                                                  textAlign: TextAlign.center,
                                                   style: GoogleFonts.mcLaren(
                                                       color: Colors.pinkAccent),
                                                 ),
@@ -612,12 +617,11 @@ class _userCalender extends State<UserCalenderPage> {
                                         Expanded(
                                           flex: 2,
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Center(
                                                 child: Text(
-                                                  subTaskTitleList[index],
+                                                  taskTitle[index],
+                                                  textAlign: TextAlign.center,
                                                   style: GoogleFonts.mcLaren(
                                                       color: Colors.pinkAccent),
                                                 ),
@@ -625,6 +629,7 @@ class _userCalender extends State<UserCalenderPage> {
                                             ],
                                           ),
                                         ),
+
                                         Expanded(
                                           flex: 1,
                                           child: Column(
@@ -634,6 +639,7 @@ class _userCalender extends State<UserCalenderPage> {
                                               Center(
                                                 child: Text(
                                                   subTaskTimeList[index],
+                                                  textAlign: TextAlign.center,
                                                   style: GoogleFonts.mcLaren(
                                                       color: Colors.pinkAccent),
                                                 ),

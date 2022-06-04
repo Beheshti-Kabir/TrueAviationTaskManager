@@ -281,6 +281,7 @@ class _adminCalender extends State<AdminCalenderPage> {
                                   child: Column(
                                     children: <Widget>[
                                       Text('Sub Task Time',
+                                          textAlign: TextAlign.center,
                                           style: GoogleFonts.mcLaren(
                                               color: Colors.pinkAccent,
                                               fontWeight: FontWeight.bold)),
@@ -288,10 +289,11 @@ class _adminCalender extends State<AdminCalenderPage> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: Column(
                                     children: <Widget>[
                                       Text('Sub Task Status',
+                                          textAlign: TextAlign.center,
                                           style: GoogleFonts.mcLaren(
                                               color: Colors.pinkAccent,
                                               fontWeight: FontWeight.bold)),
@@ -599,10 +601,64 @@ class _adminCalender extends State<AdminCalenderPage> {
                                           flex: 2,
                                           child: Column(
                                             children: <Widget>[
-                                              Text(
-                                                subTaskTitleList[index],
-                                                style: GoogleFonts.mcLaren(
-                                                    color: Colors.pinkAccent),
+                                              GestureDetector(
+                                                child: Text(
+                                                  subTaskTitleList[index],
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.mcLaren(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.pinkAccent),
+                                                ),
+                                                onTap: () {
+                                                  print('tapped');
+                                                  showDialog(
+                                                      context: context,
+                                                      builder:
+                                                          (context) =>
+                                                              AlertDialog(
+                                                                // elevation:
+                                                                //     20.0,
+                                                                // backgroundColor:
+                                                                //     Colors.,
+                                                                // shape:
+                                                                //     CircleAvatar
+                                                                // title: Text(
+                                                                //     'Task Title: ' +
+                                                                //         taskTitle[index]
+                                                                //             .toString(),
+                                                                //     style: GoogleFonts.mcLaren(
+                                                                //         color: Colors
+                                                                //             .pinkAccent,
+                                                                //         fontWeight:
+                                                                //             FontWeight.bold)),
+                                                                content: Text(
+                                                                    'Task Title: ' +
+                                                                        taskTitle[index]
+                                                                            .toString() +
+                                                                        '\nSub Task Title: ' +
+                                                                        subTaskTitleList[index]
+                                                                            .toString(),
+                                                                    style: GoogleFonts
+                                                                        .mcLaren(
+                                                                            color:
+                                                                                Colors.pinkAccent)),
+                                                                actions: <
+                                                                    Widget>[
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            context),
+                                                                    child: Text(
+                                                                        'Okay',
+                                                                        style: GoogleFonts.mcLaren(
+                                                                            color:
+                                                                                Colors.pink,
+                                                                            fontWeight: FontWeight.bold)),
+                                                                  ),
+                                                                ],
+                                                              ));
+                                                },
                                               )
                                             ],
                                           ),
@@ -616,6 +672,7 @@ class _adminCalender extends State<AdminCalenderPage> {
                                               Center(
                                                 child: Text(
                                                   subTaskTimeList[index],
+                                                  textAlign: TextAlign.center,
                                                   style: GoogleFonts.mcLaren(
                                                       color: Colors.pinkAccent),
                                                 ),
@@ -624,7 +681,7 @@ class _adminCalender extends State<AdminCalenderPage> {
                                           ),
                                         ),
                                         Expanded(
-                                          flex: 1,
+                                          flex: 2,
                                           child: Column(
                                             children: <Widget>[
                                               GestureDetector(

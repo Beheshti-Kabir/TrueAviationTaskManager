@@ -134,7 +134,7 @@ class _userLobbyPage extends State<UserLobbyPage> {
                               elevation: 7.0,
                               child: Center(
                                 child: Text(
-                                  'Calendar & Tasks',
+                                  'Calendar & Sub-Tasks',
                                   style: GoogleFonts.mcLaren(
                                     fontSize: textSize,
                                     color: Colors.yellow[100],
@@ -148,6 +148,45 @@ class _userLobbyPage extends State<UserLobbyPage> {
                       ],
                     ),
                   ),
+                  Container(
+                    padding: EdgeInsets.only(top: 20),
+                    //padding: EdgeInsets.fromLTRB(
+                    // (MediaQuery.of(context).size.width * 0.45) -
+                    //     (buttonWidth / 2),
+                    // 40.0,
+                    // 20.0,
+                    // 0.0),
+                    child: Stack(
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/userTask');
+                          },
+                          child: SizedBox(
+                            height: buttonHeight,
+                            width: buttonWidth,
+                            child: Material(
+                              borderRadius: BorderRadius.circular(35.0),
+                              shadowColor: Colors.amberAccent,
+                              color: Colors.amberAccent[400],
+                              elevation: 7.0,
+                              child: Center(
+                                child: Text(
+                                  'All Tasks',
+                                  style: GoogleFonts.mcLaren(
+                                    fontSize: textSize,
+                                    color: Colors.yellow[100],
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                   // Container(
                   //   padding: EdgeInsets.fromLTRB(
                   //       (MediaQuery.of(context).size.width * 0.45) -
@@ -226,7 +265,7 @@ class _userLobbyPage extends State<UserLobbyPage> {
                     //     20.0,
                     //     20.0,
                     //     0.0),
-                    padding: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(top: 50),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed('/changePassword');
