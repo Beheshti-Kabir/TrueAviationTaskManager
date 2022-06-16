@@ -4,8 +4,8 @@ class Constants {
 
   static String taskID = '';
 
-  static String version = '1.0.1';
-  static int versionCount = 1;
+  static String version = '1.0.2';
+  static int versionCount = 2;
   static String upgradeURL = '';
 
   static String userTypeKey = 'userType';

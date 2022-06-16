@@ -79,7 +79,7 @@ class _LogINPageState extends State<LogInPage> {
     print('$userName $emailID  $userType $token');
     message = 'Logging In';
 
-    Navigator.of(context).pushNamed(route);
+    Navigator.of(context).pushReplacementNamed(route);
   }
 
   Future<String> createAlbum() async {
